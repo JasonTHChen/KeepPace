@@ -4,9 +4,9 @@ The Keep Pace app is an offline running APP. This APP is designed to estimate us
 
 ## Coding Style
 
-XML: https://jeroenmols.com/blog/2016/03/07/resourcenaming/
-Java: https://google.github.io/styleguide/javaguide.html
-Android: https://source.android.com/source/code-style
+* XML: https://jeroenmols.com/blog/2016/03/07/resourcenaming/
+* Java: https://google.github.io/styleguide/javaguide.html
+* Android: https://source.android.com/source/code-style
 
 
 ## Authors
