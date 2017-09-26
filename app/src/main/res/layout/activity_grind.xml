@@ -4,31 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.sclfitness.keeppace.MainActivity">
+    tools:context="ca.sclfitness.keeppace.GrindActivity">
 
-    <Button
-        android:id="@+id/btn_main_grindPace"
-        style="@android:style/Widget.Button"
+    <TextView
+        android:id="@+id/textView_grind_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="30dp" />
+
+    <Button
+        android:id="@+id/btn_grind_paceType"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
         android:layout_above="@+id/btn_main_racePace"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="45dp"
-        android:background="@color/KeepPaceBlue"
+        android:background="@drawable/button"
         android:fontFamily="Verdana San"
-        android:onClick="sendToGrind"
-        android:text="@string/main_grindBtn"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:textSize="18dp" />
 
     <Button
         android:id="@+id/btn_main_racePace"
-        style="@android:style/Widget.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="184dp"
-        android:onClick="sendToRace"
-        android:text="@string/main_raceBtn" />
-
+        android:background="@drawable/button"
+        android:text="@string/all_raceBtn"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp" />
 </RelativeLayout>
