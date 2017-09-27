@@ -1,10 +1,9 @@
 package ca.sclfitness.keeppace;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,14 +17,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendToGrind(View v) {
-        Intent grindPaceIntent = new Intent(this, GrindActivity.class);
+        Intent grindPaceIntent = new Intent(this, PaceActivity.class);
 
         grindPaceIntent.putExtra("paceType", sentTextGrind);
         startActivity(grindPaceIntent);
     }
 
     public void sendToRace(View v) {
-        Intent racePaceIntent = new Intent(this, GrindActivity.class);
+        Intent racePaceIntent = new Intent(this, PaceActivity.class);
 
         racePaceIntent.putExtra("paceType", sentTextRace);
         startActivity(racePaceIntent);

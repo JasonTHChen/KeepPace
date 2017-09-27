@@ -1,17 +1,18 @@
 package ca.sclfitness.keeppace;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class GrindActivity extends AppCompatActivity {
+public class PaceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grind);
+        setContentView(R.layout.activity_pace);
 
         final TextView grindLabel = (TextView) findViewById(R.id.textView_grind_title);
         final Button paceTypeBtn = (Button) findViewById(R.id.btn_grind_paceType);
@@ -25,5 +26,17 @@ public class GrindActivity extends AppCompatActivity {
         } else {
             paceTypeBtn.setText("JUST RACE");
         }
+    }
+
+    protected void onJustClick(View v) {
+        Intent timerIntent = new Intent(this, TimerActivity.class);
+        timerIntent.putExtra("paceType", "0");
+        startActivity(timerIntent);
+    }
+
+    protected void onBeatClick(View v) {
+        Intent timerIntent = new Intent(this, TimerActivity.class);
+        timerIntent.putExtra("paceType", "1");
+        startActivity(timerIntent);
     }
 }
