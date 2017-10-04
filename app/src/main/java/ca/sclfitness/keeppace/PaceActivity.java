@@ -28,13 +28,13 @@ public class PaceActivity extends AppCompatActivity {
         }
     }
 
-    protected void onJustClick(View v) {
+    public void onJustClick(View v) {
         Intent timerIntent = new Intent(this, TimerActivity.class);
         timerIntent.putExtra("paceType", "0");
         startActivity(timerIntent);
     }
 
-    protected void onBeatClick(View v) {
+    public void onBeatClick(View v) {
         Intent timerIntent = new Intent(this, TimerActivity.class);
         timerIntent.putExtra("paceType", "1");
         startActivity(timerIntent);

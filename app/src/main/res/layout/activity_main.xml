@@ -8,27 +8,29 @@
 
     <Button
         android:id="@+id/btn_main_grindPace"
-        style="@android:style/Widget.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
         android:layout_above="@+id/btn_main_racePace"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="45dp"
-        android:background="@color/KeepPaceBlue"
+        android:background="@drawable/button"
         android:fontFamily="Verdana San"
         android:onClick="sendToGrind"
         android:text="@string/main_grindBtn"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/btn_main_racePace"
-        style="@android:style/Widget.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="184dp"
+        android:background="@drawable/button"
         android:onClick="sendToRace"
-        android:text="@string/main_raceBtn" />
+        android:text="@string/main_raceBtn"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
 </RelativeLayout>
