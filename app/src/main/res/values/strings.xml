@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">KeepPace</string>
+    <string name="main_title">KEEP PACE</string>
+    <string name="main_grindBtn">GRIND PACE</string>
+    <string name="main_raceBtn">RACE PACE</string>
+    <string name="all_raceBtn">BEAT YOUR BEST</string>
 </resources>
