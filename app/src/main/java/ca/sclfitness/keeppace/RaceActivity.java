@@ -7,43 +7,34 @@ import android.view.View;
 
 public class RaceActivity extends AppCompatActivity {
 
+    //private int paceType = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_race);
-
-        int type = (Integer) getIntent().getExtras().get("paceType");
-        Intent i = getIntent();
     }
 
     public void onFiveClick(View v) {
-
-        Intent timerIntent = new Intent(this, TimerActivity.class);
-        timerIntent.putExtra("runType", 0);
-        timerIntent.putExtra("paceType", (Integer) getIntent().getExtras().get("paceType"));
-        startActivity(timerIntent);
+        startTimerIntent("5k", 5);
     }
 
     public void onTenClick(View v) {
-
-        Intent timerIntent = new Intent(this, TimerActivity.class);
-        timerIntent.putExtra("runType", 1);
-        timerIntent.putExtra("paceType", (Integer) getIntent().getExtras().get("paceType"));
-        startActivity(timerIntent);
+        startTimerIntent("10k", 10);
     }
 
     public void onHalfMarathonClick(View v) {
-
-        Intent timerIntent = new Intent(this, TimerActivity.class);
-        timerIntent.putExtra("runType", 2);
-        timerIntent.putExtra("paceType", (Integer) getIntent().getExtras().get("paceType"));
-        startActivity(timerIntent);
+        startTimerIntent("Half Marathon", 21.1);
     }
     public void onFullMarathonClick(View v) {
+        startTimerIntent("Full Marathon", 42.2);
+    }
 
+    private void startTimerIntent(String raceType, double raceDistance) {
         Intent timerIntent = new Intent(this, TimerActivity.class);
-        timerIntent.putExtra("runType", 3);
-        timerIntent.putExtra("paceType", (Integer) getIntent().getExtras().get("paceType"));
+        timerIntent.putExtra("raceType", raceType);
+        timerIntent.putExtra("raceDistance", raceDistance);
+        timerIntent.putExtra("beatTime", getIntent().getBooleanExtra("beatTime", false));
         startActivity(timerIntent);
     }
 }

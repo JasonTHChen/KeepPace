@@ -5,42 +5,62 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 public class PaceActivity extends AppCompatActivity {
+
+    private int paceType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pace);
 
-        final TextView grindLabel = (TextView) findViewById(R.id.btn_grind_paceType);
-        final Button paceTypeBtn = (Button) findViewById(R.id.btn_grind_paceType);
+        final Button raceTypeBtn = (Button) findViewById(R.id.btn_pace_paceType);
         Intent i = getIntent();
-        int type = (Integer) getIntent().getExtras().get("type");
-        String title = i.getStringExtra("paceType");
-        grindLabel.setText(title);
+        paceType = i.getIntExtra("type", -1);
+        String paceName;
+        switch (paceType) {
+            case 0:
+                // Grind Pace
+                paceName = "Just Grind";
+                break;
+            case 1:
+                // Race Pace
+                paceName = "Just Race";
+                break;
+            default:
+                paceName = "";
+                System.err.println("passing error code " + paceType);
+                finish();
+        }
+        raceTypeBtn.setText(paceName);
+
     }
 
-   public void onJustClick(View v) {
-       Intent timerIntent;
-        if ((Integer) getIntent().getExtras().get("type") == 1) {
-            timerIntent = new Intent(this, RaceActivity.class);
-        } else {
-            timerIntent = new Intent(this, TimerActivity.class);
-        }
-        timerIntent.putExtra("paceType", 0);
-        startActivity(timerIntent);
+    public void onJustClick(View v) {
+        beatTimeIntent(false);
     }
 
     public void onBeatClick(View v) {
-        Intent timerIntent;
-        if ((Integer) getIntent().getExtras().get("type") == 1) {
-            timerIntent = new Intent(this, RaceActivity.class);
+        beatTimeIntent(true);
+    }
+
+    private void beatTimeIntent(boolean beatTime) {
+        Intent intent = null;
+        if (paceType == 0) {
+            intent = new Intent(this, TimerActivity.class);
+            intent.putExtra("raceName", "Grouse Grind");
+            intent.putExtra("raceDistance", 853);
+        } else if (paceType == 1){
+            intent = new Intent(this, RaceActivity.class);
         } else {
-            timerIntent = new Intent(this, TimerActivity.class);
+            System.err.println("passing error code " + paceType);
+            finish();
         }
-        timerIntent.putExtra("paceType", 1);
-        startActivity(timerIntent);
+
+        if (intent != null) {
+            intent.putExtra("beatTime", beatTime);
+            startActivity(intent);
+        }
     }
 }
