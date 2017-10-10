@@ -19,7 +19,6 @@
         <activity android:name=".TimerActivity" />
         <activity android:name=".PaceActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".SettingsActivity" />
         <activity android:name=".RaceActivity"></activity>
     </application>
 
