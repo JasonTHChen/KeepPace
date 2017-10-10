@@ -11,71 +11,92 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Current Time:"
+        android:layout_marginTop="19dp"
+        android:textSize="30sp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="49dp"
-        android:textSize="30dp"/>
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:onClick="hideButton"
+        android:onClick="onClickStart"
         android:text="Start"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:id="@+id/button_timer_start"
         android:layout_below="@+id/textView_timer_currentTimeLabel"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/textView_timer_estimated"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Estimated Finish Time:"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
-        android:textSize="30dp"/>
-
-    <TextView
-        android:id="@+id/textView_timer_timeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="00:00:00"
-        android:textSize="30dp"
-        android:layout_below="@+id/textView_timer_estimated"
-        android:layout_alignEnd="@+id/textView_timer_Speed" />
-
-    <TextView
-        android:id="@+id/textView_timer_speedLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Current Pace:"
-        android:textSize="30dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/textView_timer_Speed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="20 km/hr"
-        android:textSize="30dp"
-        android:layout_below="@+id/textView_timer_speedLabel"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/textView_timer_currentTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:text="00:00:00"
         android:visibility="invisible"
         android:layout_below="@+id/textView_timer_currentTimeLabel"
-        android:layout_alignStart="@+id/textView_timer_timeText" />
+        android:layout_alignEnd="@+id/textView_timer_estimatedTime" />
+
+    <TextView
+        android:id="@+id/textView_timer_estimatedTimeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estimated Finish Time:"
+        android:textSize="30sp"
+        android:layout_marginTop="60dp"
+        android:layout_below="@+id/textView_timer_currentTimeLabel"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView_timer_estimatedTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00.00"
+        android:textSize="30sp"
+        android:layout_below="@+id/textView_timer_estimatedTimeLabel"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView_timer_speedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current Pace:"
+        android:textSize="30sp"
+        android:layout_below="@+id/textView_timer_estimatedTime"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/textView_timer_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0 km/hr"
+        android:textSize="30sp"
+        android:layout_below="@+id/textView_timer_speedLabel"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView_timer_beatTimeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Beat Your Time:"
+        android:layout_below="@+id/textView_timer_speed"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="30sp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/textView_timer_beatTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00.00"
+        android:layout_below="@+id/textView_timer_beatTimeLabel"
+        android:layout_centerHorizontal="true"
+        android:textSize="30sp"
+        android:visibility="gone"/>
 
     <HorizontalScrollView
+        android:id="@+id/scrollView_timer_markers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -87,15 +108,6 @@
             android:orientation="horizontal"
             android:layout_gravity="center">
 
-            <Button
-                android:id="@+id/button_timer_markerLeft"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textSize="20sp"
-                android:textColor="#ffffff"
-                android:background="@drawable/bottom_button"
-                android:scaleX="0.35"
-                android:scaleY="0.35"/>
 
             <Button
                 android:id="@+id/button_timer_marker"
@@ -105,21 +117,10 @@
                 android:textColor="#ffffff"
                 android:onClick="advanceMarker"
                 android:text="1KM"
+                android:enabled="false"
                 android:background="@drawable/bottom_button"/>
-
-            <Button
-                android:id="@+id/button_timer_markerRight"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textSize="20sp"
-                android:textColor="#ffffff"
-                android:background="@drawable/bottom_button"
-                android:scaleX="0.35"
-                android:scaleY="0.35"/>
 
         </LinearLayout>
     </HorizontalScrollView>
-
-
 
 </RelativeLayout>
