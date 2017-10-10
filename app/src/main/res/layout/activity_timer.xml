@@ -17,14 +17,12 @@
         android:textSize="30dp"/>
 
     <Button
-        android:layout_width="250dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:onClick="onHiddenBtn"
-        android:background="@drawable/button"
+        android:onClick="hideButton"
         android:text="Start"
         android:textSize="20dp"
-        android:textColor="#FFFFFF"
         android:id="@+id/button_timer_start"
         android:layout_below="@+id/textView_timer_currentTimeLabel"
         android:layout_centerHorizontal="true" />
@@ -55,7 +53,7 @@
         android:text="Current Pace:"
         android:textSize="30dp"
         android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/textView_timer_currentTimeLabel" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/textView_timer_Speed"
@@ -77,30 +75,51 @@
         android:layout_below="@+id/textView_timer_currentTimeLabel"
         android:layout_alignStart="@+id/textView_timer_timeText" />
 
-
-
-
-    <TextView
-        android:id="@+id/textView_timer_BestTimeLabel"
-        android:layout_width="wrap_content"
+    <HorizontalScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:text="Best Your Best:"
-        android:textAlignment="center"
-        android:visibility="invisible"
-        android:layout_below="@+id/textView_timer_Speed"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp">
 
-    <TextView
-        android:id="@+id/textView_timer_BestTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:text="00:00:00"
-        android:textAlignment="center"
-        android:visibility="invisible"
-        android:layout_below="@+id/textView_timer_BestTimeLabel"
-        android:layout_alignEnd="@+id/textView_timer_Speed"
-        android:layout_marginTop="12dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/button_timer_markerLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:background="@drawable/bottom_button"
+                android:scaleX="0.35"
+                android:scaleY="0.35"/>
+
+            <Button
+                android:id="@+id/button_timer_marker"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="30sp"
+                android:textColor="#ffffff"
+                android:onClick="advanceMarker"
+                android:text="1KM"
+                android:background="@drawable/bottom_button"/>
+
+            <Button
+                android:id="@+id/button_timer_markerRight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:background="@drawable/bottom_button"
+                android:scaleX="0.35"
+                android:scaleY="0.35"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
 
 </RelativeLayout>
