@@ -4,4 +4,12 @@
     <string name="main_grindBtn">GRIND PACE</string>
     <string name="main_raceBtn">RACE PACE</string>
     <string name="all_raceBtn">BEAT YOUR BEST</string>
+    <string name="getStarted">GET STARTED</string>
+    <string name="justGrind">JUST GRIND</string>
+    <string name="TOS">By clicking above, you agree to Keep Pace\'s &lt;a href="http://www.google.com">Terms &amp; Conditions &lt;a></string>
+    <string name="fiveK">5K</string>
+    <string name="tenK">10K</string>
+    <string name="halfMarathon">1/2 MARATHON</string>
+    <string name="fullMarathon">FULL MARATHON</string>
+
 </resources>

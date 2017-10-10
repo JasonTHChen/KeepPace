@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ca.sclfitness.keeppace.RaceActivity">
+
+
+
+
+    <Button
+        android:id="@+id/btn_5k"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button"
+        android:fontFamily="Verdana San"
+        android:onClick="onFiveClick"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp"
+        android:text="@string/fiveK"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp" />
+
+    <Button
+        android:id="@+id/btn_10k"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button"
+        android:fontFamily="Verdana San"
+        android:onClick="onTenClick"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp"
+        android:text="@string/tenK"
+        android:layout_marginTop="33dp"
+        android:layout_below="@+id/btn_5k"
+        android:layout_alignStart="@+id/btn_5k" />
+
+    <Button
+        android:id="@+id/btn_halfMarathon"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button"
+        android:fontFamily="Verdana San"
+        android:onClick="onHalfMarathonClick"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp"
+        android:text="@string/halfMarathon"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/btn_fullMarathon" />
+
+    <Button
+        android:id="@+id/btn_fullMarathon"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button"
+        android:fontFamily="Verdana San"
+        android:onClick="onFullMarathonClick"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp"
+        android:text="@string/fullMarathon"
+        android:layout_below="@+id/btn_halfMarathon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp" />
+
+
+
+
+
+
+
+</RelativeLayout>
