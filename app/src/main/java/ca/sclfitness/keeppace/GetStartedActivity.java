@@ -21,6 +21,5 @@ public class GetStartedActivity extends AppCompatActivity {
     public void onStart(View v) {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
-
     }
 }

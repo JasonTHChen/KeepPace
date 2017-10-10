@@ -14,8 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="45dp"
         android:background="@drawable/button"
-        android:fontFamily="Verdana San"
-        android:onClick="sendToGrind"
+        android:onClick="onClickGrind"
         android:text="@string/main_grindBtn"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
@@ -28,7 +27,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="184dp"
         android:background="@drawable/button"
-        android:onClick="sendToRace"
+        android:onClick="onClickRace"
         android:text="@string/main_raceBtn"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
