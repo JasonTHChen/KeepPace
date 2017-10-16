@@ -1,15 +1,40 @@
 <resources>
+    <!-- General -->
     <string name="app_name">KeepPace</string>
-    <string name="main_title">KEEP PACE</string>
-    <string name="main_grindBtn">GRIND PACE</string>
-    <string name="main_raceBtn">RACE PACE</string>
-    <string name="all_raceBtn">BEAT YOUR BEST</string>
+    <string name="pace_unit">Km/Hr</string>
+    <string name="km_unit">Km</string>
+    <string name="mile_unit">Mile</string>
+    
+    <!-- GetStartedActivity -->
     <string name="getStarted">GET STARTED</string>
-    <string name="justGrind">JUST GRIND</string>
     <string name="TOS">By clicking above, you agree to Keep Pace\'s &lt;a href="http://www.google.com">Terms &amp; Conditions &lt;a></string>
-    <string name="fiveK">5K</string>
-    <string name="tenK">10K</string>
-    <string name="halfMarathon">1/2 MARATHON</string>
-    <string name="fullMarathon">FULL MARATHON</string>
+    
+    <!-- MainActivity -->
+    <string name="main_title">KEEP PACE</string>
+    <string name="main_grindPace">GRIND PACE</string>
+    <string name="main_racePace">RACE PACE</string>
+    
+    <!-- PaceActivity -->
+    <string name="pace_beatTime">BEAT YOUR BEST</string>
+    <string name="pace_grind">JUST GRIND</string>
+    <string name="pace_race">JUST RACE</string>
+
+    <!-- RaceActivity -->
+    <string name="race_fiveK">5 K</string>
+    <string name="race_tenK">10 K</string>
+    <string name="race_halfMarathon">&#189; MARATHON</string>
+    <string name="race_fullMarathon">FULL MARATHON</string>
+    
+    <!-- TimerActivity -->
+    <string name="timer_defaultTime">00:00.00</string>
+    <string name="timer_defaultPace">0 Km/Hr</string>
+    <string name="timer_currentTimeLabel">Current Time:</string>
+    <string name="timer_estimatedTimeLabel">Estimated Finish Time:</string>
+    <string name="timer_currentPaceLabel">Current Pace:</string>
+    <string name="timer_beatTimeLabel">Beat Time:</string>
+    <string name="timer_startMarker">Start</string>
+    <string name="timer_pause">Pause</string>
+    <string name="timer_resume">Resume</string>
+    <string name="timer_finish">Finish</string>
 
 </resources>
