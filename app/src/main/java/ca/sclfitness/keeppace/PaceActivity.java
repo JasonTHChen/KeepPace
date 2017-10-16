@@ -18,22 +18,20 @@ public class PaceActivity extends AppCompatActivity {
         final Button raceTypeBtn = (Button) findViewById(R.id.btn_pace_paceType);
         Intent i = getIntent();
         paceType = i.getIntExtra("type", -1);
-        String paceName;
+
         switch (paceType) {
             case 0:
                 // Grind Pace
-                paceName = "Just Grind";
+                raceTypeBtn.setText(R.string.pace_grind);
                 break;
             case 1:
                 // Race Pace
-                paceName = "Just Race";
+                raceTypeBtn.setText(R.string.pace_race);
                 break;
             default:
-                paceName = "";
                 System.err.println("passing error code " + paceType);
                 finish();
         }
-        raceTypeBtn.setText(paceName);
 
     }
 
@@ -51,7 +49,7 @@ public class PaceActivity extends AppCompatActivity {
             intent = new Intent(this, TimerActivity.class);
             intent.putExtra("raceName", "Grouse Grind");
             intent.putExtra("raceDistance", 853);
-        } else if (paceType == 1){
+        } else if (paceType == 1) {
             intent = new Intent(this, RaceActivity.class);
         } else {
             System.err.println("passing error code " + paceType);

@@ -7,59 +7,35 @@
     tools:context="ca.sclfitness.keeppace.RaceActivity">
 
     <Button
-        android:id="@+id/btn_race_5k"
-        android:layout_width="175dp"
-        android:layout_height="50dp"
-        android:background="@drawable/button"
-        android:fontFamily="Verdana San"
-        android:onClick="onFiveClick"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:text="@string/fiveK"
+        android:id="@+id/button_race_5k"
+        style="@style/RaceButton"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp" />
+        android:layout_marginTop="70dp"
+        android:onClick="onClickFive"
+        android:text="@string/race_fiveK" />
 
     <Button
-        android:id="@+id/btn_race_10k"
-        android:layout_width="175dp"
-        android:layout_height="50dp"
-        android:background="@drawable/button"
-        android:fontFamily="Verdana San"
-        android:onClick="onTenClick"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:text="@string/tenK"
+        android:id="@+id/button_race_10k"
+        style="@style/RaceButton"
+        android:layout_below="@+id/button_race_5k"
         android:layout_marginTop="50dp"
-        android:layout_below="@+id/btn_race_5k"
-        android:layout_centerHorizontal="true" />
+        android:onClick="onClickTen"
+        android:text="@string/race_tenK" />
 
     <Button
-        android:id="@+id/btn_race_halfMarathon"
-        android:layout_width="175dp"
-        android:layout_height="50dp"
-        android:background="@drawable/button"
-        android:fontFamily="Verdana San"
-        android:onClick="onHalfMarathonClick"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:id="@+id/button_race_halfMarathon"
+        style="@style/RaceButton"
+        android:layout_below="@+id/button_race_10k"
         android:layout_marginTop="50dp"
-        android:text="@string/halfMarathon"
-        android:layout_below="@+id/btn_race_10k"
-        android:layout_centerHorizontal="true" />
+        android:onClick="onClickHalfMarathon"
+        android:text="@string/race_halfMarathon" />
 
     <Button
-        android:id="@+id/btn_race_fullMarathon"
-        android:layout_width="175dp"
-        android:layout_height="50dp"
-        android:background="@drawable/button"
-        android:fontFamily="Verdana San"
-        android:onClick="onFullMarathonClick"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:id="@+id/button_race_fullMarathon"
+        style="@style/RaceButton"
+        android:layout_below="@+id/button_race_halfMarathon"
         android:layout_marginTop="50dp"
-        android:text="@string/fullMarathon"
-        android:layout_below="@+id/btn_race_halfMarathon"
-        android:layout_centerHorizontal="true" />
+        android:onClick="onClickFullMarathon"
+        android:text="@string/race_fullMarathon" />
 
 </RelativeLayout>

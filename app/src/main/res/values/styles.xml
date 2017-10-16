@@ -8,5 +8,37 @@
         <item name="colorAccent">@color/AccentKeepPaceBlue</item>
     </style>
 
+    <!-- General button layout -->
+    <style name="ButtonLayout">
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@drawable/button</item>
+    </style>
+
+    <!-- RaceActivity button -->
+    <style name="RaceButton">
+        <item name="android:layout_width">175dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@drawable/button</item>
+    </style>
+
+    <!-- TimerActivity text -->
+    <style name="TimerText">
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <!-- TimerActivity label -->
+    <style name="TimerTextLabel">
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
 
 </resources>

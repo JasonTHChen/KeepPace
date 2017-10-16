@@ -7,26 +7,25 @@ import android.view.View;
 
 public class RaceActivity extends AppCompatActivity {
 
-    //private int paceType = 1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_race);
     }
 
-    public void onFiveClick(View v) {
+    public void onClickFive(View v) {
         startTimerIntent("5k", 5);
     }
 
-    public void onTenClick(View v) {
+    public void onClickTen(View v) {
         startTimerIntent("10k", 10);
     }
 
-    public void onHalfMarathonClick(View v) {
+    public void onClickHalfMarathon(View v) {
         startTimerIntent("Half Marathon", 21.1);
     }
-    public void onFullMarathonClick(View v) {
+
+    public void onClickFullMarathon(View v) {
         startTimerIntent("Full Marathon", 42.2);
     }
 

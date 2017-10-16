@@ -7,29 +7,23 @@
     tools:context="ca.sclfitness.keeppace.MainActivity">
 
     <Button
-        android:id="@+id/btn_main_grindPace"
+        android:id="@+id/button_main_grindPace"
+        style="@style/ButtonLayout"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_above="@+id/btn_main_racePace"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="45dp"
-        android:background="@drawable/button"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="150dp"
         android:onClick="onClickGrind"
-        android:text="@string/main_grindBtn"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+        android:text="@string/main_grindPace" />
 
     <Button
-        android:id="@+id/btn_main_racePace"
+        android:id="@+id/button_main_racePace"
+        style="@style/ButtonLayout"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="184dp"
-        android:background="@drawable/button"
+        android:layout_below="@+id/button_main_grindPace"
+        android:layout_marginTop="60dp"
         android:onClick="onClickRace"
-        android:text="@string/main_raceBtn"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+        android:text="@string/main_racePace" />
 
 </RelativeLayout>
