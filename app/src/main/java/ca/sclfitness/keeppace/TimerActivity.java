@@ -9,23 +9,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 public class TimerActivity extends AppCompatActivity {
 
-    private int markerCurrent = 1;
+    private int currentMarker = 0;
+    private boolean isPause = false;
 
-    // pace settings
-    private boolean beatTime;
-    private String raceName;
-    private double raceDistance;
     // race views
-    private Button startBtn;
+    private Button pauseResumeBtn;
     private TextView currentTimeView, estimatedTimeView, currentSpeedView, beatTimeLabel, beatTimeView;
     // race
     private Race race;
     // timer
     private Handler handler;
     private long millisecondTime, startTime, timeBuff, updateTime = 0L;
-    private int seconds, minutes, milliSeconds = 0;
+    //private int seconds, minutes, milliSeconds = 0;
     // marker buttons
     private Button markerBtn;
 
@@ -34,13 +33,11 @@ public class TimerActivity extends AppCompatActivity {
         public void run() {
             millisecondTime = SystemClock.uptimeMillis() - startTime;
             updateTime = timeBuff + millisecondTime;
-            seconds = (int) (updateTime / 1000);
-            minutes = seconds / 60;
+            int seconds = (int) (updateTime / 1000);
+            int minutes = seconds / 60;
             seconds = seconds % 60;
-            milliSeconds = (int) (updateTime / 10) % 100;
-            currentTimeView.setText(String.format("%02d", minutes) + ":"
-                    + String.format("%02d", seconds) + "."
-                    + String.format("%02d", milliSeconds));
+            int milliSeconds = (int) (updateTime / 10) % 100;
+            currentTimeView.setText(String.format(Locale.getDefault(), "%02d:%02d.%02d", minutes, seconds, milliSeconds));
             handler.postDelayed(this, 0);
         }
     };
@@ -51,18 +48,19 @@ public class TimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timer);
 
         // views
-        startBtn = (Button) findViewById(R.id.button_timer_start);
+        //startBtn = (Button) findViewById(R.id.button_timer_start);
         currentTimeView = (TextView) findViewById(R.id.textView_timer_currentTime);
         estimatedTimeView = (TextView) findViewById(R.id.textView_timer_estimatedTime);
-        currentSpeedView = (TextView) findViewById(R.id.textView_timer_speed);
+        currentSpeedView = (TextView) findViewById(R.id.textView_timer_pace);
         beatTimeLabel = (TextView) findViewById(R.id.textView_timer_beatTimeLabel);
         beatTimeView = (TextView) findViewById(R.id.textView_timer_beatTime);
+        pauseResumeBtn = (Button) findViewById(R.id.button_timer_pauseResume);
         markerBtn = (Button) findViewById(R.id.button_timer_marker);
 
         Intent intent = getIntent();
-        beatTime = intent.getBooleanExtra("beatTime", false);
-        raceName = intent.getStringExtra("raceName");
-        raceDistance = intent.getDoubleExtra("raceDistance", 0.0);
+        boolean beatTime = intent.getBooleanExtra("beatTime", false);
+        String raceName = intent.getStringExtra("raceName");
+        double raceDistance = intent.getDoubleExtra("raceDistance", 0.0);
 
         if (beatTime) {
             beatTimeLabel.setVisibility(View.VISIBLE);
@@ -76,44 +74,58 @@ public class TimerActivity extends AppCompatActivity {
         handler = new Handler();
     }
 
-    public void onClickStart(View v) {
-        startBtn.setVisibility(View.GONE);
-        currentTimeView.setVisibility(View.VISIBLE);
-        startTime = SystemClock.uptimeMillis();
-        handler.postDelayed(runnable, 0);
-        startBtn.setEnabled(false);
-        final Handler makerHandler = new Handler();
-        makerHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                markerBtn.setEnabled(true);
-            }
-        }, 2000);
-    }
-
-    public void advanceMarker(View v) {
-        double currentPace = race.getCurrentPace(markerCurrent, updateTime);
-        currentSpeedView.setText(String.format("%.2f", currentPace * 1000.0 * 60.0 * 60.0) + " Km/h");
-
-        if (markerBtn.getText().equals("Finish")) {
+    public void onClickPauseResume(View v) {
+        if (!isPause) {
             timeBuff += millisecondTime;
             handler.removeCallbacks(runnable);
-            finish();
+            markerBtn.setEnabled(false);
+            isPause = true;
+            pauseResumeBtn.setText(R.string.timer_resume);
         } else {
-            long timeInMilli = race.getEstimateTime(currentPace);
-            int secs = (int) (timeInMilli / 1000);
-            int min = (secs / 60);
-            secs = secs % 60;
-            int msecs = (int) (timeInMilli / 10) % 100;
-            estimatedTimeView.setText(String.format("%02d", min) + ":"
-                    + String.format("%02d", secs) + "."
-                    + String.format("%02d", msecs));
-            if (markerCurrent > race.getMakers() - 1) {
-                markerBtn.setText("Finish");
+            startTime = SystemClock.uptimeMillis();
+            handler.postDelayed(runnable, 0);
+            markerBtn.setEnabled(true);
+            isPause = false;
+            pauseResumeBtn.setText(R.string.timer_pause);
+        }
+    }
+
+    public void onClickMarker(View v) {
+        if (currentMarker <= race.getMakers()) {
+            if (currentMarker == 0) {
+                startTime = SystemClock.uptimeMillis();
+                handler.postDelayed(runnable, 0);
+                currentMarker++;
+                markerBtn.setText(currentMarker + R.string.km_unit);
+                pauseResumeBtn.setEnabled(true);
+                pauseResumeBtn.setVisibility(View.VISIBLE);
+                isPause = false;
             } else {
-                markerBtn.setText(markerCurrent + "KM");
+                double currentPace = race.getCurrentPace(currentMarker, updateTime);
+                currentSpeedView.setText(String.format(Locale.getDefault(), "%.2f " + R.string.pace_unit
+                        , currentPace * 1000.0 * 60.0 * 60.0));
+                if (currentMarker == race.getMakers()) {
+                    timeBuff += millisecondTime;
+                    handler.removeCallbacks(runnable);
+                    markerBtn.setEnabled(false);
+                    pauseResumeBtn.setEnabled(false);
+                    pauseResumeBtn.setVisibility(View.INVISIBLE);
+                } else {
+                    long timeInMilli = race.getEstimateTime(currentPace);
+                    int secs = (int) (timeInMilli / 1000);
+                    int min = (secs / 60);
+                    secs = secs % 60;
+                    int msecs = (int) (timeInMilli / 10) % 100;
+                    estimatedTimeView.setText(String.format(Locale.getDefault(), "%02d:%02d.%02d", min, secs, msecs));
+                    if (currentMarker == race.getMakers() - 1) {
+                        currentMarker++;
+                        markerBtn.setText(R.string.timer_finish);
+                    } else {
+                        currentMarker++;
+                        markerBtn.setText(currentMarker + R.string.km_unit);
+                    }
+                }
             }
-            markerCurrent++;
         }
     }
 }
