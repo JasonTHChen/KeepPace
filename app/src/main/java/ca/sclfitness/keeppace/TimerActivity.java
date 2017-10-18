@@ -80,13 +80,13 @@ public class TimerActivity extends AppCompatActivity {
             handler.removeCallbacks(runnable);
             markerBtn.setEnabled(false);
             isPause = true;
-            pauseResumeBtn.setText(R.string.timer_resume);
+            pauseResumeBtn.setText(getResources().getString(R.string.timer_resume));
         } else {
             startTime = SystemClock.uptimeMillis();
             handler.postDelayed(runnable, 0);
             markerBtn.setEnabled(true);
             isPause = false;
-            pauseResumeBtn.setText(R.string.timer_pause);
+            pauseResumeBtn.setText(getResources().getString(R.string.timer_pause));
         }
     }
 
@@ -96,13 +96,13 @@ public class TimerActivity extends AppCompatActivity {
                 startTime = SystemClock.uptimeMillis();
                 handler.postDelayed(runnable, 0);
                 currentMarker++;
-                markerBtn.setText(currentMarker + R.string.km_unit);
+                markerBtn.setText(Integer.toString(currentMarker) + getResources().getString(R.string.km_unit));
                 pauseResumeBtn.setEnabled(true);
                 pauseResumeBtn.setVisibility(View.VISIBLE);
                 isPause = false;
             } else {
                 double currentPace = race.getCurrentPace(currentMarker, updateTime);
-                currentSpeedView.setText(String.format(Locale.getDefault(), "%.2f " + R.string.pace_unit
+                currentSpeedView.setText(String.format(Locale.getDefault(), "%.2f " + getResources().getString(R.string.pace_unit)
                         , currentPace * 1000.0 * 60.0 * 60.0));
                 if (currentMarker == race.getMakers()) {
                     timeBuff += millisecondTime;
@@ -119,10 +119,10 @@ public class TimerActivity extends AppCompatActivity {
                     estimatedTimeView.setText(String.format(Locale.getDefault(), "%02d:%02d.%02d", min, secs, msecs));
                     if (currentMarker == race.getMakers() - 1) {
                         currentMarker++;
-                        markerBtn.setText(R.string.timer_finish);
+                        markerBtn.setText(getResources().getString(R.string.timer_finish));
                     } else {
                         currentMarker++;
-                        markerBtn.setText(currentMarker + R.string.km_unit);
+                        markerBtn.setText(Integer.toString(currentMarker) + getResources().getString(R.string.km_unit));
                     }
                 }
             }
