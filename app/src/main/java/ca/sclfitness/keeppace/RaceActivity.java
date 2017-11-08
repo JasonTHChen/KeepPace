@@ -14,11 +14,11 @@ public class RaceActivity extends AppCompatActivity {
     }
 
     public void onClickFive(View v) {
-        startTimerIntent("5k", 5);
+        startTimerIntent("5k", 5.0);
     }
 
     public void onClickTen(View v) {
-        startTimerIntent("10k", 10);
+        startTimerIntent("10k", 10.0);
     }
 
     public void onClickHalfMarathon(View v) {

@@ -13,7 +13,7 @@ import java.util.Locale;
 
 public class TimerActivity extends AppCompatActivity {
 
-    private int currentMarker = 0;
+    private int counter = 0;
     private boolean isPause = false;
 
     // race views
@@ -27,6 +27,8 @@ public class TimerActivity extends AppCompatActivity {
     //private int seconds, minutes, milliSeconds = 0;
     // marker buttons
     private Button markerBtn;
+
+    private int mode = 0;
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -59,8 +61,14 @@ public class TimerActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         boolean beatTime = intent.getBooleanExtra("beatTime", false);
-        String raceName = intent.getStringExtra("raceName");
+        String raceName = intent.getStringExtra("raceType");
         double raceDistance = intent.getDoubleExtra("raceDistance", 0.0);
+
+        if (raceName.equalsIgnoreCase("Grouse Grind")) {
+            mode = 1;
+        } else {
+            mode = 0;
+        }
 
         if (beatTime) {
             beatTimeLabel.setVisibility(View.VISIBLE);
@@ -91,23 +99,24 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     public void onClickMarker(View v) {
-        if (currentMarker <= race.getMakers()) {
-            if (currentMarker == 0) {
+        if (counter <= race.getMakers()) {
+            if (counter == 0) {
                 startTime = SystemClock.uptimeMillis();
                 handler.postDelayed(runnable, 0);
-                currentMarker++;
-                markerBtn.setText(Integer.toString(currentMarker) + getResources().getString(R.string.km_unit));
+                counter++;
+                //markerBtn.setText(race.getMarkerName(counter, mode));
                 pauseResumeBtn.setEnabled(true);
                 pauseResumeBtn.setVisibility(View.VISIBLE);
                 isPause = false;
             } else {
-                double currentPace = race.getCurrentPace(currentMarker, updateTime);
+                double currentPace = race.getCurrentPace(counter, updateTime, mode);
                 currentSpeedView.setText(String.format(Locale.getDefault(), "%.2f " + getResources().getString(R.string.pace_unit)
                         , currentPace * 1000.0 * 60.0 * 60.0));
-                if (currentMarker == race.getMakers()) {
+                if (counter == race.getMakers()) {
                     timeBuff += millisecondTime;
                     handler.removeCallbacks(runnable);
                     markerBtn.setEnabled(false);
+                    markerBtn.setVisibility(View.INVISIBLE);
                     pauseResumeBtn.setEnabled(false);
                     pauseResumeBtn.setVisibility(View.INVISIBLE);
                 } else {
@@ -117,15 +126,10 @@ public class TimerActivity extends AppCompatActivity {
                     secs = secs % 60;
                     int msecs = (int) (timeInMilli / 10) % 100;
                     estimatedTimeView.setText(String.format(Locale.getDefault(), "%02d:%02d.%02d", min, secs, msecs));
-                    if (currentMarker == race.getMakers() - 1) {
-                        currentMarker++;
-                        markerBtn.setText(getResources().getString(R.string.timer_finish));
-                    } else {
-                        currentMarker++;
-                        markerBtn.setText(Integer.toString(currentMarker) + getResources().getString(R.string.km_unit));
-                    }
+                    counter++;
                 }
             }
+            markerBtn.setText(race.getMarkerName(counter, mode));
         }
     }
 }
