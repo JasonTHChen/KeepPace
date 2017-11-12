@@ -19,7 +19,7 @@ public class Race {
     }
 
     public int getMakers() {
-        if (mTotalDistance == 853) {
+        if (mTotalDistance == 2.2) {
             return 4;
         }
 
@@ -31,13 +31,13 @@ public class Race {
         double currentDistance = (double) marker;
         if (mode == 1) {
             if (marker == 1) {
-                currentDistance = 853 * 0.33;
+                currentDistance = 2.2 * 0.39;
             } else if (marker == 2) {
-                currentDistance = 853 * 0.54;
+                currentDistance = 2.2 * 0.57;
             } else if (marker == 3) {
-                currentDistance = 853 * 0.78;
+                currentDistance = 2.2 * 0.82;
             } else {
-                currentDistance = 853;
+                currentDistance = 2.2;
             }
         }
         return currentDistance / (double) time;
