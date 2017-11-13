@@ -4,16 +4,22 @@
     <string name="pace_unit">Km/Hr</string>
     <string name="km_unit">Km</string>
     <string name="mile_unit">Mile</string>
-    
+
+    <!-- UserLogActivity -->
+    <string name="userLog_title">User Log</string>
+    <string name="userLog_raceName">Name</string>
+    <string name="userLog_avgPace">Avg. Pace</string>
+    <string name="userLog_bestTime">Best Time</string>
+
     <!-- GetStartedActivity -->
     <string name="getStarted">GET STARTED</string>
     <string name="TOS">By clicking above, you agree to Keep Pace\'s &lt;a href="http://www.google.com">Terms &amp; Conditions &lt;a></string>
-    
+
     <!-- MainActivity -->
     <string name="main_title">KEEP PACE</string>
     <string name="main_grindPace">GRIND PACE</string>
     <string name="main_racePace">RACE PACE</string>
-    
+
     <!-- PaceActivity -->
     <string name="pace_beatTime">BEAT YOUR BEST</string>
     <string name="pace_grind">JUST GRIND</string>
@@ -24,7 +30,7 @@
     <string name="race_tenK">10 K</string>
     <string name="race_halfMarathon">&#189; MARATHON</string>
     <string name="race_fullMarathon">FULL MARATHON</string>
-    
+
     <!-- TimerActivity -->
     <string name="timer_defaultTime">00:00.00</string>
     <string name="timer_defaultPace">0 Km/Hr</string>
