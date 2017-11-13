@@ -50,7 +50,6 @@ public class TimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timer);
 
         // views
-        //startBtn = (Button) findViewById(R.id.button_timer_start);
         currentTimeView = (TextView) findViewById(R.id.textView_timer_currentTime);
         estimatedTimeView = (TextView) findViewById(R.id.textView_timer_estimatedTime);
         currentSpeedView = (TextView) findViewById(R.id.textView_timer_pace);
@@ -104,7 +103,6 @@ public class TimerActivity extends AppCompatActivity {
                 startTime = SystemClock.uptimeMillis();
                 handler.postDelayed(runnable, 0);
                 counter++;
-                //markerBtn.setText(race.getMarkerName(counter, mode));
                 pauseResumeBtn.setEnabled(true);
                 pauseResumeBtn.setVisibility(View.VISIBLE);
                 isPause = false;
