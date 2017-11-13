@@ -20,6 +20,7 @@ public class Race {
      * Default constructor
      */
     public Race() {
+        this.mName = "";
     }
 
     /**
@@ -34,6 +35,22 @@ public class Race {
         this.mMarkers = markers;
         this.mAveragePace = 0.0;
         this.mBestTime = "0";
+    }
+
+    public double getCurrentPace(int currentMarker, long currentTime) {
+        double currentDistance = (double) currentMarker;
+        return currentDistance / (double) currentTime;
+    }
+
+    public long getEstimateTime(double pace) {
+        return (long) (mDistance / pace);
+    }
+
+    public String getMarkerName(int count) {
+        if (count == getMarkers()) {
+            return "finish";
+        }
+        return String.valueOf(count) + "K";
     }
 
     /**

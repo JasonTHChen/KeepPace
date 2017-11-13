@@ -48,7 +48,6 @@ public class PaceActivity extends AppCompatActivity {
         if (paceType == 0) {
             intent = new Intent(this, TimerActivity.class);
             intent.putExtra("raceType", "Grouse Grind");
-            intent.putExtra("raceDistance", 2.2);
         } else if (paceType == 1) {
             intent = new Intent(this, RaceActivity.class);
         } else {

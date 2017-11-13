@@ -14,25 +14,24 @@ public class RaceActivity extends AppCompatActivity {
     }
 
     public void onClickFive(View v) {
-        startTimerIntent("5k", 5.0);
+        startTimerIntent("5K");
     }
 
     public void onClickTen(View v) {
-        startTimerIntent("10k", 10.0);
+        startTimerIntent("10K");
     }
 
     public void onClickHalfMarathon(View v) {
-        startTimerIntent("Half Marathon", 21.1);
+        startTimerIntent("Half Marathon");
     }
 
     public void onClickFullMarathon(View v) {
-        startTimerIntent("Full Marathon", 42.2);
+        startTimerIntent("Full Marathon");
     }
 
-    private void startTimerIntent(String raceType, double raceDistance) {
+    private void startTimerIntent(String raceType) {
         Intent timerIntent = new Intent(this, TimerActivity.class);
         timerIntent.putExtra("raceType", raceType);
-        timerIntent.putExtra("raceDistance", raceDistance);
         timerIntent.putExtra("beatTime", getIntent().getBooleanExtra("beatTime", false));
         startActivity(timerIntent);
     }

@@ -7,7 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ca.sclfitness.keeppace.database.IRace;
+import ca.sclfitness.keeppace.model.GrouseGrind;
 import ca.sclfitness.keeppace.model.Race;
 
 /**
@@ -22,7 +26,7 @@ import ca.sclfitness.keeppace.model.Race;
 public class RaceDao extends Dao {
     private static final String TAG = RaceDao.class.getSimpleName();
 
-    protected RaceDao(Context context, String tableName) {
+    public RaceDao(Context context) {
         super(context, IRace.RACE_TABLE_NAME);
     }
 
@@ -54,7 +58,13 @@ public class RaceDao extends Dao {
 
             Log.d(TAG, "Found race " + cursor.getCount() + " row");
             if (cursor.moveToFirst()) {
-                race = new Race();
+                if (name.equalsIgnoreCase(GrouseGrind.GROUSE_GRIND)) {
+                    Log.d(TAG, "Grouse Grind initialized");
+                    race = new GrouseGrind();
+                } else {
+                    Log.d(TAG, "Basic race initialized");
+                    race = new Race();
+                }
                 race.setId(cursor.getInt(0));
                 race.setName(cursor.getString(1));
                 race.setDistance(cursor.getDouble(2));
@@ -69,5 +79,33 @@ public class RaceDao extends Dao {
         }
 
         return race;
+    }
+
+    public List<Race> findAllRaces() {
+        List<Race> races = null;
+        try {
+            SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+            Cursor cursor = sqLiteDatabase.rawQuery("SELECT DISTINCT * FROM " + IRace.RACE_TABLE_NAME, null);
+            int count = cursor.getCount();
+            Log.d(TAG, "Found races " + count + " row");
+            if (count > 0 && cursor.moveToFirst()) {
+                races = new ArrayList<>(count);
+                do {
+                    Race race = new Race();
+                    race.setId(cursor.getInt(0));
+                    race.setName(cursor.getString(1));
+                    race.setDistance(cursor.getDouble(2));
+                    race.setMarkers(cursor.getInt(3));
+                    race.setAveragePace(cursor.getDouble(4));
+                    race.setBestTime(cursor.getString(5));
+                    races.add(race);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            sqLiteDatabase.close();
+        } catch (SQLiteException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        return races;
     }
 }
