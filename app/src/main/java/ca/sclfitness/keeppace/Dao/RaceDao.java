@@ -19,6 +19,7 @@ import ca.sclfitness.keeppace.model.Race;
  * saves user's best time and average pace into different races.
  * Searches user's best time and average pace of different races.
  *
+ * @version kp 1.0
  * @author Jason, Tzu Hsiang Chen
  * @since November 12, 2017
  */
@@ -46,6 +47,7 @@ public class RaceDao extends Dao {
 
     /**
      * Find a race by name.
+     *
      * @param name - name of the race.
      * @return race - a race object if it is found.
      */
@@ -70,7 +72,7 @@ public class RaceDao extends Dao {
                 race.setDistance(cursor.getDouble(2));
                 race.setMarkers(cursor.getInt(3));
                 race.setAveragePace(cursor.getDouble(4));
-                race.setBestTime(cursor.getString(5));
+                race.setBestTime(cursor.getLong(5));
             }
             cursor.close();
             db.close();
@@ -81,6 +83,11 @@ public class RaceDao extends Dao {
         return race;
     }
 
+    /**
+     * Find all the races.
+     *
+     * @return races - a list of races if they are found.
+     */
     public List<Race> findAllRaces() {
         List<Race> races = null;
         try {
@@ -97,7 +104,7 @@ public class RaceDao extends Dao {
                     race.setDistance(cursor.getDouble(2));
                     race.setMarkers(cursor.getInt(3));
                     race.setAveragePace(cursor.getDouble(4));
-                    race.setBestTime(cursor.getString(5));
+                    race.setBestTime(cursor.getLong(5));
                     races.add(race);
                 } while (cursor.moveToNext());
             }

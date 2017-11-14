@@ -18,14 +18,8 @@ import ca.sclfitness.keeppace.model.Race;
 
 public class UserLogAdapter extends ArrayAdapter<Race> {
 
-    private Context mContext;
-    private List<Race> mRaces;
-
-
     public UserLogAdapter(Context context, List<Race> races) {
         super(context, 0, races);
-        this.mRaces = races;
-        this.mContext = context;
     }
 
     @Override
@@ -42,10 +36,10 @@ public class UserLogAdapter extends ArrayAdapter<Race> {
         if (race != null) {
             nameView.setText(race.getName());
             paceView.setText(String.valueOf(race.getAveragePace()));
-            if (race.getBestTime().equals("0")) {
-                bestTimeView.setText("--:--.---");
+            if (race.getBestTime() == 0) {
+                bestTimeView.setText("--:--.--");
             } else {
-                bestTimeView.setText(race.getBestTime());
+                bestTimeView.setText(race.bestTimeText());
             }
         }
 

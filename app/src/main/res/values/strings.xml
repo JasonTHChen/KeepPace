@@ -42,5 +42,6 @@
     <string name="timer_pause">Pause</string>
     <string name="timer_resume">Resume</string>
     <string name="timer_finish">Finish</string>
+    <string name="timer_save">Save</string>
 
 </resources>

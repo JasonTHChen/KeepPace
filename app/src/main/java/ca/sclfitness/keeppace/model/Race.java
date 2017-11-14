@@ -1,5 +1,7 @@
 package ca.sclfitness.keeppace.model;
 
+import java.util.Locale;
+
 /**
  * Basic model for a race
  *
@@ -14,7 +16,7 @@ public class Race {
     private double mDistance;
     private int mMarkers;
     private double mAveragePace;
-    private String mBestTime;
+    private long mBestTime;
 
     /**
      * Default constructor
@@ -33,19 +35,37 @@ public class Race {
         this.mName = name;
         this.mDistance = distance;
         this.mMarkers = markers;
-        this.mAveragePace = 0.0;
-        this.mBestTime = "0";
+        this.mAveragePace = 0.00;
+        this.mBestTime = 0;
     }
 
+    /**
+     * Get current pace
+     *
+     * @param currentMarker - current marker
+     * @param currentTime - current time
+     * @return current pace
+     */
     public double getCurrentPace(int currentMarker, long currentTime) {
         double currentDistance = (double) currentMarker;
         return currentDistance / (double) currentTime;
     }
 
+    /**
+     * Get estimated finish time
+     * @param pace - current speed
+     * @return estimated finish time
+     */
     public long getEstimateTime(double pace) {
         return (long) (mDistance / pace);
     }
 
+    /**
+     * Get marker names.
+     *
+     * @param count - current marker
+     * @return marker name
+     */
     public String getMarkerName(int count) {
         if (count == getMarkers()) {
             return "finish";
@@ -54,48 +74,90 @@ public class Race {
     }
 
     /**
-     * Get race ID
-     * @return mId - race ID as int
+     * Converts milliseconds to hh:mm:ss or mm:ss.ss
+     *
+     * @param ms - milliseconds
+     * @return time in String format
+     */
+    public String timeTextFormat(long ms) {
+        int msec = (int) (ms / 10) % 100;
+        int sec = (int) (ms / 1000);
+        int min = sec / 60;
+        int hour = min / 60;
+        sec = sec % 60;
+        if (hour > 0) {
+            return String.format(Locale.getDefault(), "%02d:%02d:%02d", hour, min, sec);
+        }
+        return String.format(Locale.getDefault(), "%02d:%02d.%02d", min, sec, msec);
+    }
+
+    /**
+     * Converts estimate time to String
+     *
+     * @param pace - current speed
+     * @return String format hh:mm:ss or mm:ss.ss
+     */
+    public String estimateTimeText(double pace) {
+        return timeTextFormat(getEstimateTime(pace));
+    }
+
+    /**
+     * Converts best time to String
+     * @return String format hh:mm:ss or mm:ss.ss
+     */
+    public String bestTimeText() {
+        return timeTextFormat(mBestTime);
+    }
+
+    /**
+     * Get race ID.
+     *
+     * @return mId - race ID as int.
      */
     public int getId() {
         return mId;
     }
 
     /**
-     * Set race ID
-     * @param id - race ID
+     * Set race ID.
+     *
+     * @param id - race ID.
      */
     public void setId(int id) {
         this.mId = id;
     }
 
     /**
-     * Get name of the race
-     * @return mName - name of the race as String
+     * Get name of the race.
+     * \
+     * @return mName - name of the race as String.
      */
     public String getName() {
         return mName;
     }
 
     /**
-     * Set name of the race
-     * @param name - name of the race
+     * Set name of the race.
+     *
+     * @param name - name of the race.
      */
     public void setName(String name) {
         this.mName = name;
     }
 
     /**
-     * Get total distance
-     * @return mDistance - total distance as double
+     * Get total distance.
+     *
+     * @return mDistance - total distance as double.
      */
     public double getDistance() {
         return mDistance;
     }
 
     /**
-     * Set total distance
-     * @param distance - total distance
+     * Set total distance.
+     *
+     * @param distance - total distance.
      */
     public void setDistance(double distance) {
         this.mDistance = distance;
@@ -137,7 +199,7 @@ public class Race {
      * Get best time of the race
      * @return mBestTime - best time of the race as String
      */
-    public String getBestTime() {
+    public long getBestTime() {
         return mBestTime;
     }
 
@@ -145,7 +207,7 @@ public class Race {
      * Set best time of the race
      * @param bestTime - best time
      */
-    public void setBestTime(String bestTime) {
+    public void setBestTime(long bestTime) {
         this.mBestTime = bestTime;
     }
 

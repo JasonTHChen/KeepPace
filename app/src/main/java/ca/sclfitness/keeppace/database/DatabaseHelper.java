@@ -91,6 +91,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Insert current race.
+     *
+     * @param db - SQLiteDatabase object
+     * @param race - Race object
+     */
     private void insertRaces(SQLiteDatabase db, Race race) {
         ContentValues values = new ContentValues();
         values.put(IRace.RACE_ID_COLUMN, race.getId());
