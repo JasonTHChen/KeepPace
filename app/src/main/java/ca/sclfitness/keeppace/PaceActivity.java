@@ -43,6 +43,12 @@ public class PaceActivity extends AppCompatActivity {
         beatTimeIntent(true);
     }
 
+    /**
+     * pass information to next intent
+     * depend on which arguments is passed, it will show different intent
+     *
+     * @param beatTime - true if user select beat your best time
+     */
     private void beatTimeIntent(boolean beatTime) {
         Intent intent = null;
         if (paceType == 0) {

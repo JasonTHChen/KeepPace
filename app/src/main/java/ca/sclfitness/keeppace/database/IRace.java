@@ -27,7 +27,7 @@ public interface IRace {
             + RACE_DISTANCE_COLUMN + " REAL, "
             + RACE_MARKERS_COLUMN + " INTEGER, "
             + RACE_AVERAGE_PACE_COLUMN + " REAL, "
-            + RACE_BEST_TIME_COLUMN + " TEXT);";
+            + RACE_BEST_TIME_COLUMN + " INTEGER);";
 
     // drop race table
     String DROP_RACE_TABLE = "DROP IF EXISTS " + RACE_TABLE_NAME;

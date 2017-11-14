@@ -29,6 +29,11 @@ public class RaceActivity extends AppCompatActivity {
         startTimerIntent("Full Marathon");
     }
 
+    /**
+     * Start timer activity and pass arguments for creating a race
+     *
+     * @param raceType - name of the race
+     */
     private void startTimerIntent(String raceType) {
         Intent timerIntent = new Intent(this, TimerActivity.class);
         timerIntent.putExtra("raceType", raceType);

@@ -15,12 +15,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    /**
+     * Create options menu
+     *
+     * @param menu - Menu object
+     * @return true if any option menu is created
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Listen which menu item is selected.
+     *
+     * @param item - MenuItem object.
+     * @return true if menu item is found.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

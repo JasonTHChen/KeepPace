@@ -87,6 +87,21 @@
         android:layout_below="@+id/textView_timer_estimatedTimeLabel"
         android:text="@string/timer_defaultTime" />
 
+    <Button
+        android:id="@+id/button_timer_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_button"
+        android:onClick="onClickSave"
+        android:visibility="gone"
+        android:text="@string/timer_save"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        android:enabled="false"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp" />
+
     <HorizontalScrollView
         android:id="@+id/scrollView_timer_markers"
         android:layout_width="match_parent"
