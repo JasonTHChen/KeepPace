@@ -162,13 +162,16 @@ public class TimerActivity extends AppCompatActivity {
      */
     public void onClickMarker(int distance) {
         // find current pace
-        distance += 1;
         double currentPace = race.getCurrentPace(distance, updateTime);
+        double pace = currentPace * 1000.0 * 60.0 * 60.0;
         currentSpeedView.setText(String.format(Locale.getDefault(), "%.2f " + getResources().getString(R.string.pace_unit)
-                , currentPace * 1000.0 * 60.0 * 60.0));
+                , pace));
         if (distance == race.getMarkers()) {
             // finish
-            race.setAveragePace(currentPace);
+            BigDecimal bd = new BigDecimal(pace);
+            bd = bd.setScale(2, RoundingMode.FLOOR);
+            pace = bd.doubleValue();
+            race.setAveragePace(pace);
             isFinished = true;
             scrollView.setVisibility(View.GONE);
             pauseTimer();
@@ -192,9 +195,6 @@ public class TimerActivity extends AppCompatActivity {
      */
     private void saveRace() {
         double pace = race.getAveragePace();
-        BigDecimal bd = new BigDecimal(pace);
-        bd = bd.setScale(2, RoundingMode.FLOOR);
-        pace = bd.doubleValue();
         long finishTime = updateTime;
         race.setAveragePace(pace);
         race.setBestTime(finishTime);

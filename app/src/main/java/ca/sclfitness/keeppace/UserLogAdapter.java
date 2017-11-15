@@ -35,7 +35,7 @@ public class UserLogAdapter extends ArrayAdapter<Race> {
 
         if (race != null) {
             nameView.setText(race.getName());
-            paceView.setText(String.valueOf(race.getAveragePace()));
+            paceView.setText(String.valueOf(race.getAveragePace()) + " Km/Hr");
             if (race.getBestTime() == 0) {
                 bestTimeView.setText("--:--.--");
             } else {
