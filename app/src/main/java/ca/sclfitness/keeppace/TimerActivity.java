@@ -9,9 +9,7 @@ import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -26,13 +24,6 @@ import ca.sclfitness.keeppace.model.Race;
 
 public class TimerActivity extends AppCompatActivity {
     private static final String TAG = TimerActivity.class.getSimpleName();
-
-    // Counts the number of button clicks
-    private int counter = 0;
-
-    private final int maxBtns = 3;
-
-    private int markerId = 0;
 
     // Pause check
     private boolean isPaused = false;
@@ -53,9 +44,8 @@ public class TimerActivity extends AppCompatActivity {
     // buttons
     private Button pauseResumeBtn, saveBtn, startBtn;
 
-    private LinearLayout markers;
-
-    private HorizontalScrollView hz;
+    // markers scroll view
+    private HorizontalScrollView scrollView;
 
     // Timer thread
     private Runnable runnable = new Runnable() {
@@ -81,17 +71,18 @@ public class TimerActivity extends AppCompatActivity {
         beatTimeView = (TextView) findViewById(R.id.textView_timer_beatTime);
         pauseResumeBtn = (Button) findViewById(R.id.button_timer_pauseResume);
         startBtn = (Button) findViewById(R.id.button_timer_start);
-        //markerBtn = (Button) findViewById(R.id.button_timer_marker);
         saveBtn = (Button) findViewById(R.id.button_timer_save);
-        markers = (LinearLayout) findViewById(R.id.linearLayout_timer_markers);
-        hz = (HorizontalScrollView) findViewById(R.id.scrollView_timer_markers);
-
-        hz.scrollTo(100, 0);
+        scrollView = (HorizontalScrollView) findViewById(R.id.scrollView_timer_markers);
 
         Intent intent = getIntent();
         beatTime = intent.getBooleanExtra("beatTime", false);
         String raceName = intent.getStringExtra("raceType");
+
+        // setup race
         this.raceSetup(raceName);
+
+        // make markers scroll view based on the race
+        this.makeMarkers();
 
         if (beatTime) {
             beatTimeLabel.setVisibility(View.VISIBLE);
@@ -99,17 +90,15 @@ public class TimerActivity extends AppCompatActivity {
             beatTimeView.setText(race.timeTextFormat(race.getBestTime()));
         }
 
-        hz.post(new Runnable() {
-            @Override
-            public void run() {
-                hz.scrollTo(100, 0);
-            }
-        });
-
         // timer handler
         handler = new Handler();
     }
 
+    /**
+     * Setup race object and initialize it
+     *
+     * @param raceName - name of the race
+     */
     private void raceSetup(String raceName) {
         RaceDao raceDao = new RaceDao(TimerActivity.this);
         race = raceDao.findRaceByName(raceName);
@@ -153,7 +142,7 @@ public class TimerActivity extends AppCompatActivity {
     /**
      * Pause/Resumes the timer
      *
-     * @param v
+     * @param v - view object
      */
     public void onClickPauseResume(View v) {
         if (!isPaused) {
@@ -166,6 +155,11 @@ public class TimerActivity extends AppCompatActivity {
         isFinished = false;
     }
 
+    /**
+     * Set on click for the marker buttons
+     *
+     * @param distance - current marker
+     */
     public void onClickMarker(int distance) {
         // find current pace
         distance += 1;
@@ -174,9 +168,9 @@ public class TimerActivity extends AppCompatActivity {
                 , currentPace * 1000.0 * 60.0 * 60.0));
         if (distance == race.getMarkers()) {
             // finish
-            counter = distance;
+            race.setAveragePace(currentPace);
             isFinished = true;
-            markers.setVisibility(View.GONE);
+            scrollView.setVisibility(View.GONE);
             pauseTimer();
         } else {
             // increment marker
@@ -197,7 +191,7 @@ public class TimerActivity extends AppCompatActivity {
      * Store finish time and average pace
      */
     private void saveRace() {
-        double pace = race.getCurrentPace(counter, updateTime) * 1000.0 * 60.0 * 60.0;
+        double pace = race.getAveragePace();
         BigDecimal bd = new BigDecimal(pace);
         bd = bd.setScale(2, RoundingMode.FLOOR);
         pace = bd.doubleValue();
@@ -209,7 +203,7 @@ public class TimerActivity extends AppCompatActivity {
     /**
      * Save button
      *
-     * @param v
+     * @param v - view object
      */
     public void onClickSave(View v) {
         AlertDialog alertDialog = new AlertDialog.Builder(TimerActivity.this).create();
@@ -222,6 +216,7 @@ public class TimerActivity extends AppCompatActivity {
                 RaceDao raceDao = new RaceDao(TimerActivity.this);
                 raceDao.update(race);
                 raceDao.close();
+                finish();
             }
         });
 
@@ -237,52 +232,43 @@ public class TimerActivity extends AppCompatActivity {
     /**
      * Start button
      *
-     * @param v
+     * @param v - view object
      */
     public void onClickStart(View v) {
         // Hit start
+        scrollView.setVisibility(View.VISIBLE);
         startTimer();
-        makeMarkers();
     }
 
+    /**
+     * Create markers
+     */
     public void makeMarkers() {
+        final LinearLayout markers = (LinearLayout) findViewById(R.id.linearLayout_timer_markers);
         for (int id = 0; id <= race.getMarkers() + 1; id++) {
-            final Button b = new Button(this);
-            b.setText(race.getMarkerName(id));
-            b.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            b.setOnClickListener(new View.OnClickListener() {
+            final Button markerBtn = new Button(this);
+            markerBtn.setText(race.getMarkerName(id));
+            markerBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            if (id == 0 || id == (race.getMarkers() + 1)) {
+                markerBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button));
+                markerBtn.setVisibility(View.INVISIBLE);
+                markerBtn.setEnabled(false);
+            } else {
+                markerBtn.setId(id);
+                markerBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button));
+                markerBtn.setTextColor(Color.WHITE);
+                markerBtn.setTextSize(30);
+            }
+
+            markerBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    onClickMarker(b.getId());
-                    hz.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            /*
-                            if (b.getId() == 0) {
-                                return;
-                            }
-                            Button preBtn = (Button) findViewById(b.getId() - 1);
-                            Button postBtn = (Button) findViewById(b.getId() + 1);
-                            preBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button_small));
-                            postBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button_small));
-                            */
-                            hz.smoothScrollBy(b.getWidth(), 0);
-                        }
-                    }, 100);
+                    onClickMarker(markerBtn.getId());
+                    scrollView.smoothScrollBy(markerBtn.getWidth(), 0);
                 }
             });
-            if (id == 0 || id == (race.getMarkers() + 1)) {
-                b.setBackground(getResources().getDrawable(R.drawable.bottom_button));
-                b.setVisibility(View.INVISIBLE);
-                b.setEnabled(false);
-            }
-            else {
-                b.setId(markerId);
-                b.setBackground(getResources().getDrawable(R.drawable.bottom_button));
-                b.setTextColor(Color.WHITE);
-                b.setTextSize(30);
-                markerId++;
-            }
-            markers.addView(b);
+            markers.addView(markerBtn);
         }
+
+
     }
 }

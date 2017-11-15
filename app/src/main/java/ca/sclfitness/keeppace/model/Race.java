@@ -70,6 +70,11 @@ public class Race {
         if (count == getMarkers()) {
             return "finish";
         }
+
+        if (count <= 0 || count > getMarkers()) {
+            return "";
+        }
+
         return String.valueOf(count) + "K";
     }
 
