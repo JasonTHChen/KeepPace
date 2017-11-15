@@ -9,8 +9,12 @@ import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
@@ -23,9 +27,20 @@ import ca.sclfitness.keeppace.model.Race;
 public class TimerActivity extends AppCompatActivity {
     private static final String TAG = TimerActivity.class.getSimpleName();
 
+    // Counts the number of button clicks
     private int counter = 0;
+
+    private final int maxBtns = 3;
+
+    private int markerId = 0;
+
+    // Pause check
     private boolean isPaused = false;
+
+    // Finish Check
     private boolean isFinished = false;
+
+    // Beat your best mode toggle
     private boolean beatTime = false;
 
     // race views
@@ -36,10 +51,13 @@ public class TimerActivity extends AppCompatActivity {
     private Handler handler;
     private long millisecondTime, startTime, timeBuff, updateTime = 0L;
     // buttons
-    private Button pauseResumeBtn, markerBtn, saveBtn;
+    private Button pauseResumeBtn, saveBtn, startBtn;
 
-    private int mode = 0;
+    private LinearLayout markers;
 
+    private HorizontalScrollView hz;
+
+    // Timer thread
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -62,8 +80,13 @@ public class TimerActivity extends AppCompatActivity {
         beatTimeLabel = (TextView) findViewById(R.id.textView_timer_beatTimeLabel);
         beatTimeView = (TextView) findViewById(R.id.textView_timer_beatTime);
         pauseResumeBtn = (Button) findViewById(R.id.button_timer_pauseResume);
-        markerBtn = (Button) findViewById(R.id.button_timer_marker);
+        startBtn = (Button) findViewById(R.id.button_timer_start);
+        //markerBtn = (Button) findViewById(R.id.button_timer_marker);
         saveBtn = (Button) findViewById(R.id.button_timer_save);
+        markers = (LinearLayout) findViewById(R.id.linearLayout_timer_markers);
+        hz = (HorizontalScrollView) findViewById(R.id.scrollView_timer_markers);
+
+        hz.scrollTo(100, 0);
 
         Intent intent = getIntent();
         beatTime = intent.getBooleanExtra("beatTime", false);
@@ -75,6 +98,13 @@ public class TimerActivity extends AppCompatActivity {
             beatTimeView.setVisibility(View.VISIBLE);
             beatTimeView.setText(race.timeTextFormat(race.getBestTime()));
         }
+
+        hz.post(new Runnable() {
+            @Override
+            public void run() {
+                hz.scrollTo(100, 0);
+            }
+        });
 
         // timer handler
         handler = new Handler();
@@ -100,6 +130,7 @@ public class TimerActivity extends AppCompatActivity {
             handler.postDelayed(runnable, 0);
             pauseResumeBtn.setEnabled(true);
             pauseResumeBtn.setVisibility(View.VISIBLE);
+            startBtn.setVisibility(View.GONE);
             isPaused = false;
         }
     }
@@ -112,8 +143,6 @@ public class TimerActivity extends AppCompatActivity {
         handler.removeCallbacks(runnable);
         isPaused = true;
         if (isFinished) {
-            markerBtn.setEnabled(false);
-            markerBtn.setVisibility(View.GONE);
             pauseResumeBtn.setEnabled(false);
             pauseResumeBtn.setVisibility(View.INVISIBLE);
             saveBtn.setVisibility(View.VISIBLE);
@@ -121,7 +150,11 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Pause/Resumes the timer
+     *
+     * @param v
+     */
     public void onClickPauseResume(View v) {
         if (!isPaused) {
             pauseTimer();
@@ -131,40 +164,32 @@ public class TimerActivity extends AppCompatActivity {
             pauseResumeBtn.setText(getResources().getString(R.string.timer_pause));
         }
         isFinished = false;
-        markerBtn.setEnabled(!isPaused);
     }
 
-    public void onClickMarker(View v) {
-        if (counter <= race.getMarkers()) {
-            if (counter == 0) {
-                // Hit start
-                startTimer();
-                counter++;
-            } else {
-                // find current pace
-                double currentPace = race.getCurrentPace(counter, updateTime);
-                currentSpeedView.setText(String.format(Locale.getDefault(), "%.2f " + getResources().getString(R.string.pace_unit)
-                        , currentPace * 1000.0 * 60.0 * 60.0));
-                if (counter == race.getMarkers()) {
-                    // finish
-                    isFinished = true;
-                    pauseTimer();
+    public void onClickMarker(int distance) {
+        // find current pace
+        distance += 1;
+        double currentPace = race.getCurrentPace(distance, updateTime);
+        currentSpeedView.setText(String.format(Locale.getDefault(), "%.2f " + getResources().getString(R.string.pace_unit)
+                , currentPace * 1000.0 * 60.0 * 60.0));
+        if (distance == race.getMarkers()) {
+            // finish
+            counter = distance;
+            isFinished = true;
+            markers.setVisibility(View.GONE);
+            pauseTimer();
+        } else {
+            // increment marker
+            long estimateTime = race.getEstimateTime(currentPace);
+            if (race.getBestTime() != 0 && beatTime) {
+                if (estimateTime < race.getBestTime()) {
+                    estimatedTimeView.setTextColor(Color.GREEN);
                 } else {
-                    // increment marker
-                    long estimateTime = race.getEstimateTime(currentPace);
-                    if (race.getBestTime() != 0 && beatTime) {
-                        if (estimateTime < race.getBestTime()) {
-                            estimatedTimeView.setTextColor(Color.GREEN);
-                        } else {
-                            estimatedTimeView.setTextColor(Color.RED);
-                        }
-                    }
-
-                    estimatedTimeView.setText(race.estimateTimeText(currentPace));
-                    counter++;
+                    estimatedTimeView.setTextColor(Color.RED);
                 }
             }
-            markerBtn.setText(race.getMarkerName(counter));
+
+            estimatedTimeView.setText(race.estimateTimeText(currentPace));
         }
     }
 
@@ -181,6 +206,11 @@ public class TimerActivity extends AppCompatActivity {
         race.setBestTime(finishTime);
     }
 
+    /**
+     * Save button
+     *
+     * @param v
+     */
     public void onClickSave(View v) {
         AlertDialog alertDialog = new AlertDialog.Builder(TimerActivity.this).create();
         alertDialog.setTitle("Saving Log");
@@ -202,5 +232,57 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
         alertDialog.show();
+    }
+
+    /**
+     * Start button
+     *
+     * @param v
+     */
+    public void onClickStart(View v) {
+        // Hit start
+        startTimer();
+        makeMarkers();
+    }
+
+    public void makeMarkers() {
+        for (int id = 0; id <= race.getMarkers() + 1; id++) {
+            final Button b = new Button(this);
+            b.setText(race.getMarkerName(id));
+            b.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            b.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    onClickMarker(b.getId());
+                    hz.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            /*
+                            if (b.getId() == 0) {
+                                return;
+                            }
+                            Button preBtn = (Button) findViewById(b.getId() - 1);
+                            Button postBtn = (Button) findViewById(b.getId() + 1);
+                            preBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button_small));
+                            postBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button_small));
+                            */
+                            hz.smoothScrollBy(b.getWidth(), 0);
+                        }
+                    }, 100);
+                }
+            });
+            if (id == 0 || id == (race.getMarkers() + 1)) {
+                b.setBackground(getResources().getDrawable(R.drawable.bottom_button));
+                b.setVisibility(View.INVISIBLE);
+                b.setEnabled(false);
+            }
+            else {
+                b.setId(markerId);
+                b.setBackground(getResources().getDrawable(R.drawable.bottom_button));
+                b.setTextColor(Color.WHITE);
+                b.setTextSize(30);
+                markerId++;
+            }
+            markers.addView(b);
+        }
     }
 }
