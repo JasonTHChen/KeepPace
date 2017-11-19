@@ -1,12 +1,30 @@
 <resources>
     <!-- General -->
     <string name="app_name">KeepPace</string>
-    <string name="pace_unit">Km/Hr</string>
+    <string name="pace_km_per_hr">km/h</string>
+    <string name="pace_mile_per_hr">mi/h</string>
     <string name="km_unit">Km</string>
     <string name="mile_unit">Mile</string>
+    <string name="setting_title">Settings</string>
+
+    <!-- SettingsActivity -->
+    <string name="setting_general_title">General</string>
+    <string name="setting_about_title">About</string>
+    <string name="unit_dialog_title">Select a unit</string>
+    <string name="key_unit">key_unit</string>
+    <string-array name="unit_list">
+        <item>Km</item>
+        <item>Mile</item>
+    </string-array>
+
+    <string-array name="list_value">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 
     <!-- UserLogActivity -->
     <string name="userLog_title">User Log</string>
+    <string name="upload_title">Upload Records</string>
     <string name="userLog_raceName">Name</string>
     <string name="userLog_avgPace">Avg. Pace</string>
     <string name="userLog_bestTime">Best Time</string>
@@ -33,7 +51,7 @@
 
     <!-- TimerActivity -->
     <string name="timer_defaultTime">00:00.00</string>
-    <string name="timer_defaultPace">0 Km/Hr</string>
+    <string name="timer_defaultPace">0.00</string>
     <string name="timer_currentTimeLabel">Current Time:</string>
     <string name="timer_estimatedTimeLabel">Estimated Finish Time:</string>
     <string name="timer_currentPaceLabel">Current Pace:</string>
@@ -43,5 +61,5 @@
     <string name="timer_resume">Resume</string>
     <string name="timer_finish">Finish</string>
     <string name="timer_save">Save</string>
-
+    <string name="title_activity_settings">Settings</string>
 </resources>

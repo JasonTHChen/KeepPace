@@ -2,10 +2,12 @@ package ca.sclfitness.keeppace;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -33,6 +35,9 @@ public class TimerActivity extends AppCompatActivity {
 
     // Beat your best mode toggle
     private boolean beatTime = false;
+
+    // Unit
+    private String unit;
 
     // race views
     private TextView currentTimeView, estimatedTimeView, currentSpeedView, beatTimeLabel, beatTimeView;
@@ -74,6 +79,16 @@ public class TimerActivity extends AppCompatActivity {
         saveBtn = (Button) findViewById(R.id.button_timer_save);
         scrollView = (HorizontalScrollView) findViewById(R.id.scrollView_timer_markers);
 
+        // Get unit preference
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        unit = sharedPreferences.getString(getString(R.string.key_unit), "1");
+        if (unit.equals("2")) {
+            currentSpeedView.append(" " + getString(R.string.pace_mile_per_hr));
+        } else {
+            currentSpeedView.append(" " + getString(R.string.pace_km_per_hr));
+        }
+
+        //scrollView.setScroll
         Intent intent = getIntent();
         beatTime = intent.getBooleanExtra("beatTime", false);
         String raceName = intent.getStringExtra("raceType");
@@ -164,8 +179,14 @@ public class TimerActivity extends AppCompatActivity {
         // find current pace
         double currentPace = race.getCurrentPace(distance, updateTime);
         double pace = currentPace * 1000.0 * 60.0 * 60.0;
-        currentSpeedView.setText(String.format(Locale.getDefault(), "%.2f " + getResources().getString(R.string.pace_unit)
-                , pace));
+        if (unit.equals("2")) {
+            currentSpeedView.setText(String.format(Locale.getDefault(), "%.2f " + getString(R.string.pace_mile_per_hr)
+                    , race.convertToMile(pace)));
+        } else {
+            currentSpeedView.setText(String.format(Locale.getDefault(), "%.2f " + getString(R.string.pace_km_per_hr)
+                    , pace));
+        }
+
         if (distance == race.getMarkers()) {
             // finish
             BigDecimal bd = new BigDecimal(pace);

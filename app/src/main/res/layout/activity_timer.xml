@@ -91,37 +91,38 @@
         android:id="@+id/button_timer_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/bottom_button"
+        android:enabled="false"
         android:onClick="onClickSave"
-        android:visibility="gone"
         android:text="@string/timer_save"
         android:textColor="#ffffff"
         android:textSize="30sp"
-        android:enabled="false"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp" />
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/button_timer_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/bottom_button"
         android:onClick="onClickStart"
         android:text="@string/timer_startMarker"
         android:textColor="#ffffff"
-        android:textSize="30sp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp" />
+        android:textSize="30sp" />
 
     <HorizontalScrollView
         android:id="@+id/scrollView_timer_markers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="invisible"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:scrollbars="none"
+        android:visibility="invisible">
 
         <LinearLayout
             android:id="@+id/linearLayout_timer_markers"
