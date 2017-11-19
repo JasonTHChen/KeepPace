@@ -11,6 +11,7 @@ import java.util.Locale;
  */
 
 public class Race {
+    public static final double MILE_CONVERSION = 0.6214;
     private int mId;
     private String mName;
     private double mDistance;
@@ -37,6 +38,16 @@ public class Race {
         this.mMarkers = markers;
         this.mAveragePace = 0.00;
         this.mBestTime = 0;
+    }
+
+    /**
+     * Converts kilometers to miles
+     *
+     * @param kilometer - distance in kilometer
+     * @return distance in mile
+     */
+    public double convertToMile(double kilometer) {
+        return kilometer * MILE_CONVERSION;
     }
 
     /**

@@ -35,10 +35,15 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.userLog_action:
-                Intent i = new Intent(MainActivity.this, UserLogActivity.class);
-                startActivity(i);
+                intent = new Intent(MainActivity.this, UserLogActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.setting_action:
+                intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

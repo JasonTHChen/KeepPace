@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/setting_general_title">
+        <ListPreference
+            android:defaultValue="1"
+            android:dialogTitle="@string/setting_general_title"
+            android:entries="@array/unit_list"
+            android:entryValues="@array/list_value"
+            android:key="@string/key_unit"
+            android:summary="@string/km_unit"
+            android:title="Unit" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_about_title">
+    </PreferenceCategory>
+</PreferenceScreen>
