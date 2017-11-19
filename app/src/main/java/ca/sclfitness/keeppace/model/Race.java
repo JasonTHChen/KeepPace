@@ -18,12 +18,14 @@ public class Race {
     private int mMarkers;
     private double mAveragePace;
     private long mBestTime;
+    private String mUnit;
 
     /**
      * Default constructor
      */
     public Race() {
         this.mName = "";
+        this.mUnit = "km";
     }
 
     /**
@@ -38,6 +40,7 @@ public class Race {
         this.mMarkers = markers;
         this.mAveragePace = 0.00;
         this.mBestTime = 0;
+        this.mUnit = "km";
     }
 
     /**
@@ -84,6 +87,12 @@ public class Race {
 
         if (count <= 0 || count > getMarkers()) {
             return "";
+        }
+
+        if (mUnit.equals("mile")) {
+            if (mName.equals("Half Marathon") || mName.equals("Full Marathon")) {
+                return String.valueOf(count) + "mi";
+            }
         }
 
         return String.valueOf(count) + "K";
@@ -184,6 +193,14 @@ public class Race {
      * @return mMarkers - total markers as int
      */
     public int getMarkers() {
+        if (mUnit.equals("mile")) {
+            if (mName.equals("Half Marathon")) {
+                return 13;
+            } else if (mName.equals("Full Marathon")) {
+                return 26;
+            }
+        }
+        // km
         return mMarkers;
     }
 
@@ -225,6 +242,22 @@ public class Race {
      */
     public void setBestTime(long bestTime) {
         this.mBestTime = bestTime;
+    }
+
+    /**
+     * Get unit of the race
+     * @return unit - unit of distance
+     */
+    public String getUnit() {
+        return mUnit;
+    }
+
+    /**
+     * Set unit of the race
+     * @param unit - unit of the race
+     */
+    public void setUnit(String unit) {
+        this.mUnit = unit;
     }
 
     @Override

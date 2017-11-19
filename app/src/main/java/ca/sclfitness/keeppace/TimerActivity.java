@@ -36,9 +36,6 @@ public class TimerActivity extends AppCompatActivity {
     // Beat your best mode toggle
     private boolean beatTime = false;
 
-    // Unit
-    private String unit;
-
     // race views
     private TextView currentTimeView, estimatedTimeView, currentSpeedView, beatTimeLabel, beatTimeView;
     // race
@@ -63,6 +60,10 @@ public class TimerActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Create timer activity
+     * @param savedInstanceState - save current state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,15 +80,6 @@ public class TimerActivity extends AppCompatActivity {
         saveBtn = (Button) findViewById(R.id.button_timer_save);
         scrollView = (HorizontalScrollView) findViewById(R.id.scrollView_timer_markers);
 
-        // Get unit preference
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        unit = sharedPreferences.getString(getString(R.string.key_unit), "1");
-        if (unit.equals("2")) {
-            currentSpeedView.append(" " + getString(R.string.pace_mile_per_hr));
-        } else {
-            currentSpeedView.append(" " + getString(R.string.pace_km_per_hr));
-        }
-
         //scrollView.setScroll
         Intent intent = getIntent();
         beatTime = intent.getBooleanExtra("beatTime", false);
@@ -95,6 +87,16 @@ public class TimerActivity extends AppCompatActivity {
 
         // setup race
         this.raceSetup(raceName);
+
+        // Get unit preference
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String unit = sharedPreferences.getString(getString(R.string.key_unit), "1");
+        if (unit.equals("2")) {
+            currentSpeedView.append(" " + getString(R.string.pace_mile_per_hr));
+            race.setUnit("mile");
+        } else {
+            currentSpeedView.append(" " + getString(R.string.pace_km_per_hr));
+        }
 
         // make markers scroll view based on the race
         this.makeMarkers();
@@ -179,7 +181,7 @@ public class TimerActivity extends AppCompatActivity {
         // find current pace
         double currentPace = race.getCurrentPace(distance, updateTime);
         double pace = currentPace * 1000.0 * 60.0 * 60.0;
-        if (unit.equals("2")) {
+        if (race.getUnit().equals("mile")) {
             currentSpeedView.setText(String.format(Locale.getDefault(), "%.2f " + getString(R.string.pace_mile_per_hr)
                     , race.convertToMile(pace)));
         } else {
