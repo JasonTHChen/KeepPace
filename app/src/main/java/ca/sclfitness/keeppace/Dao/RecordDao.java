@@ -50,13 +50,23 @@ public class RecordDao extends Dao {
      *
      * @param record - record object.
      */
-    public void update(Record record) {
+    public void update(int recordId, Record newRecord) {
         ContentValues values = new ContentValues();
-        values.put(IRecord.RECORD_AVERAGE_PACE_COLUMN, record.getAveragePace());
-        values.put(IRecord.RECORD_TIME_COLUMN, record.getTime());
-        String[] args = {String.valueOf(record.getId())};
+        values.put(IRecord.RECORD_AVERAGE_PACE_COLUMN, newRecord.getAveragePace());
+        values.put(IRecord.RECORD_TIME_COLUMN, newRecord.getTime());
+        String[] args = {String.valueOf(recordId)};
         Log.i(TAG, "Updating a record");
         super.update(IRecord.RECORD_ID_COLUMN, args, values);
+    }
+
+    /**
+     * Delete a record
+     * @param recordId - record Id
+     */
+    public void delete(int recordId) {
+        String[] args = {String.valueOf(recordId)};
+        Log.i(TAG, "Deleting a record");
+        super.delete(IRecord.RECORD_ID_COLUMN, args);
     }
 
     /**
@@ -91,29 +101,5 @@ public class RecordDao extends Dao {
             Log.e(TAG, e.getMessage());
         }
         return records;
-    }
-
-    public Record findWorstRecord(int raceId) {
-        Record record = null;
-        try {
-            SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
-            Cursor cursor = sqLiteDatabase.rawQuery("SELECT DISTINCT * FROM " + IRecord.RECORD_TABLE_NAME
-                    + " WHERE " + IRace.RACE_ID_COLUMN + " = '" + raceId + "' ORDER BY " + IRecord.RECORD_TIME_COLUMN + " DESC LIMIT 1;", null);
-            int count = cursor.getCount();
-            Log.d(TAG, "Found races " + count + " row");
-            if (cursor.moveToFirst()) {
-                record = new Record(
-                        cursor.getInt(0),
-                        cursor.getDouble(1),
-                        cursor.getLong(2),
-                        cursor.getInt(3)
-                );
-            }
-            cursor.close();
-            sqLiteDatabase.close();
-        } catch (SQLiteException e) {
-            Log.e(TAG, e.getMessage());
-        }
-        return record;
     }
 }

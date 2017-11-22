@@ -24,6 +24,7 @@ import java.util.Locale;
 
 import ca.sclfitness.keeppace.Dao.RaceDao;
 import ca.sclfitness.keeppace.Dao.RecordDao;
+import ca.sclfitness.keeppace.model.FullCrunch;
 import ca.sclfitness.keeppace.model.Race;
 import ca.sclfitness.keeppace.model.Record;
 
@@ -107,7 +108,10 @@ public class TimerActivity extends AppCompatActivity {
         if (beatTime) {
             beatTimeLabel.setVisibility(View.VISIBLE);
             beatTimeView.setVisibility(View.VISIBLE);
-            beatTimeView.setText(race.timeTextFormat(race.getBestRecord().getTime()));
+            Record record = race.getBestRecord();
+            if (record != null) {
+                beatTimeView.setText(race.timeTextFormat(record.getTime()));
+            }
         }
 
         // timer handler
@@ -260,7 +264,7 @@ public class TimerActivity extends AppCompatActivity {
                     warnDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            recordDao.update(race.getWorstRecord());
+                            recordDao.update(race.getWorstRecord().getId(), record);
                             recordDao.close();
                             TimerActivity.this.finish();
                         }
@@ -315,7 +319,11 @@ public class TimerActivity extends AppCompatActivity {
                 markerBtn.setId(id);
                 markerBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button));
                 markerBtn.setTextColor(Color.WHITE);
-                markerBtn.setTextSize(30);
+                if (race.getName().equals(FullCrunch.FULL_CRUNCH)) {
+                    markerBtn.setTextSize(15);
+                } else {
+                    markerBtn.setTextSize(30);
+                }
             }
 
             markerBtn.setOnClickListener(new View.OnClickListener() {

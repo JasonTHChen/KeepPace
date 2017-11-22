@@ -40,11 +40,14 @@
     <!-- MainActivity -->
     <string name="main_title">KEEP PACE</string>
     <string name="main_grindPace">GRIND PACE</string>
+    <string name="main_fullCrunch">FULL CRUNCH</string>
+    <string name="main_stairCrunch">STAIR CRUNCH</string>
     <string name="main_racePace">RACE PACE</string>
 
     <!-- PaceActivity -->
     <string name="pace_beatTime">BEAT YOUR BEST</string>
     <string name="pace_grind">JUST GRIND</string>
+    <string name="pace_crunch">JUST CRUNCH</string>
     <string name="pace_race">JUST RACE</string>
 
     <!-- RaceActivity -->

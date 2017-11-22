@@ -35,6 +35,7 @@ public class UserLogActivity extends AppCompatActivity {
                 Race race = (Race) parent.getItemAtPosition(position);
                 Intent i = new Intent(UserLogActivity.this, RecordsActivity.class);
                 i.putExtra("raceId", race.getId());
+                i.putExtra("raceName", race.getName());
                 startActivity(i);
             }
         });

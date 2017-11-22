@@ -28,6 +28,12 @@ public class PaceActivity extends AppCompatActivity {
                 // Race Pace
                 raceTypeBtn.setText(R.string.pace_race);
                 break;
+            case 2:
+                raceTypeBtn.setText(getString(R.string.pace_crunch));
+                break;
+            case 3:
+                raceTypeBtn.setText(getString(R.string.pace_crunch));
+                break;
             default:
                 System.err.println("passing error code " + paceType);
                 finish();
@@ -56,6 +62,12 @@ public class PaceActivity extends AppCompatActivity {
             intent.putExtra("raceType", "Grouse Grind");
         } else if (paceType == 1) {
             intent = new Intent(this, RaceActivity.class);
+        } else if (paceType == 2 ) {
+            intent = new Intent(this, TimerActivity.class);
+            intent.putExtra("raceType", "Full Crunch");
+        } else if (paceType == 3) {
+            intent = new Intent(this, TimerActivity.class);
+            intent.putExtra("raceType", "437 Steps");
         } else {
             System.err.println("passing error code " + paceType);
             finish();

@@ -56,6 +56,24 @@ public class Race {
         mRecords = new ArrayList<>(MAX_RECORD_SETS);
     }
 
+    /**
+     * replace a record with new record
+     * @param recordId - record Id
+     * @param newRecord - a new record
+     */
+    public void replace(int recordId, Record newRecord) {
+        for (Record record : mRecords) {
+            if (record.getId() == recordId) {
+                record.setTime(newRecord.getTime());
+                record.setAveragePace(newRecord.getAveragePace());
+            }
+        }
+    }
+
+    /**
+     * Get worst record
+     * @return a worst record from a list
+     */
     public Record getWorstRecord() {
         if (mRecords.size() == 0) {
             return null;

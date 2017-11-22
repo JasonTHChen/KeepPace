@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.sclfitness.keeppace.database.IRace;
+import ca.sclfitness.keeppace.model.FullCrunch;
 import ca.sclfitness.keeppace.model.GrouseGrind;
 import ca.sclfitness.keeppace.model.Race;
 import ca.sclfitness.keeppace.model.Record;
+import ca.sclfitness.keeppace.model.StairCrunch;
 
 /**
  * @author Jason, Tzu Hsiang Chen
@@ -47,6 +49,12 @@ public class RaceDao extends Dao {
                 if (name.equalsIgnoreCase(GrouseGrind.GROUSE_GRIND)) {
                     Log.d(TAG, "Grouse Grind initialized");
                     race = new GrouseGrind();
+                } else if (name.equalsIgnoreCase(FullCrunch.FULL_CRUNCH)) {
+                    Log.d(TAG, "Full Crunch initialized");
+                    race = new FullCrunch();
+                } else if (name.equalsIgnoreCase(StairCrunch.STAIR_CRUNCH)) {
+                    Log.d(TAG, "Stair Crunch initialized");
+                    race = new StairCrunch();
                 } else {
                     Log.d(TAG, "Basic race initialized");
                     race = new Race();
