@@ -24,10 +24,14 @@
 
     <!-- UserLogActivity -->
     <string name="userLog_title">User Log</string>
-    <string name="upload_title">Upload Records</string>
     <string name="userLog_raceName">Name</string>
     <string name="userLog_avgPace">Avg. Pace</string>
     <string name="userLog_bestTime">Best Time</string>
+
+    <!-- RecordsActivity -->
+    <string name="records_pace">Avg.Pace</string>
+    <string name="records_time">Time</string>
+    <string name="upload_title">Upload Records</string>
 
     <!-- GetStartedActivity -->
     <string name="getStarted">GET STARTED</string>

@@ -13,7 +13,7 @@ import ca.sclfitness.keeppace.model.Race;
 public class RaceSeed {
 
     private Race[] mRaces;
-    private static final int numRaces = 6;
+    private static final int numRaces = 7;
 
     public RaceSeed() {
         mRaces = new Race[numRaces];
@@ -22,7 +22,8 @@ public class RaceSeed {
         mRaces[2] = new Race("Half Marathon", 21.1, 21);
         mRaces[3] = new Race("Full Marathon", 42.2, 42);
         mRaces[4] = new Race("Grouse Grind", 2.2, 4);
-        mRaces[5] = new Race("Coquitlam Crunch", 2.25, 8);
+        mRaces[5] = new Race("Full Crunch", 2.25, 8);
+        mRaces[6] = new Race("437 Steps", 0.3, 9);
 
         for (int i = 0; i < mRaces.length; i++) {
             mRaces[i].setId(i+1);

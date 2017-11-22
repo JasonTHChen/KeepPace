@@ -18,7 +18,7 @@ import ca.sclfitness.keeppace.database.DatabaseHelper;
 
 public abstract class Dao {
     private static final String TAG = Dao.class.getSimpleName();
-    private static final String WHERE = " = ?";
+    protected static final String WHERE = " = ?";
 
     // count total number of the object
     private static int count = 0;

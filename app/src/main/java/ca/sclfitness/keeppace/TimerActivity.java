@@ -19,10 +19,13 @@ import android.widget.TextView;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.Locale;
 
 import ca.sclfitness.keeppace.Dao.RaceDao;
+import ca.sclfitness.keeppace.Dao.RecordDao;
 import ca.sclfitness.keeppace.model.Race;
+import ca.sclfitness.keeppace.model.Record;
 
 public class TimerActivity extends AppCompatActivity {
     private static final String TAG = TimerActivity.class.getSimpleName();
@@ -104,7 +107,7 @@ public class TimerActivity extends AppCompatActivity {
         if (beatTime) {
             beatTimeLabel.setVisibility(View.VISIBLE);
             beatTimeView.setVisibility(View.VISIBLE);
-            beatTimeView.setText(race.timeTextFormat(race.getBestTime()));
+            beatTimeView.setText(race.timeTextFormat(race.getBestRecord().getTime()));
         }
 
         // timer handler
@@ -122,6 +125,15 @@ public class TimerActivity extends AppCompatActivity {
         raceDao.close();
         if (race != null) {
             Log.d(TAG, "Found " + raceName);
+            RecordDao recordDao = new RecordDao(TimerActivity.this);
+            List<Record> records = recordDao.findRecordsByRaceId(race.getId());
+            if (records != null) {
+                Log.d(TAG, records.size() + " records found");
+                race.setRecords(records);
+            } else {
+                Log.d(TAG, "No Record is found");
+            }
+            recordDao.close();
         } else {
             Log.d(TAG, raceName + " not found");
         }
@@ -201,8 +213,8 @@ public class TimerActivity extends AppCompatActivity {
         } else {
             // increment marker
             long estimateTime = race.getEstimateTime(currentPace);
-            if (race.getBestTime() != 0 && beatTime) {
-                if (estimateTime < race.getBestTime()) {
+            if (race.getTime() != 0 && beatTime) {
+                if (estimateTime < race.getTime()) {
                     estimatedTimeView.setTextColor(Color.GREEN);
                 } else {
                     estimatedTimeView.setTextColor(Color.RED);
@@ -220,7 +232,7 @@ public class TimerActivity extends AppCompatActivity {
         double pace = race.getAveragePace();
         long finishTime = updateTime;
         race.setAveragePace(pace);
-        race.setBestTime(finishTime);
+        race.setTime(finishTime);
     }
 
     /**
@@ -229,17 +241,40 @@ public class TimerActivity extends AppCompatActivity {
      * @param v - view object
      */
     public void onClickSave(View v) {
-        AlertDialog alertDialog = new AlertDialog.Builder(TimerActivity.this).create();
+        final AlertDialog alertDialog = new AlertDialog.Builder(TimerActivity.this).create();
         alertDialog.setTitle("Saving Log");
-        alertDialog.setMessage("This will overwrite your previous records. Would you like to continue?");
+        alertDialog.setMessage("Would you like to save the race?");
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 saveRace();
-                RaceDao raceDao = new RaceDao(TimerActivity.this);
-                raceDao.update(race);
-                raceDao.close();
-                finish();
+                final RecordDao recordDao = new RecordDao(TimerActivity.this);
+                final Record record = new Record(race.getAveragePace(), race.getTime(), race.getId());
+                if (race.addRecord(record)) {
+                    recordDao.insert(record);
+                } else {
+                    dialog.dismiss();
+                    AlertDialog warnDialog = new AlertDialog.Builder(TimerActivity.this).create();
+                    warnDialog.setTitle("Saving Log");
+                    warnDialog.setMessage("This will overwrite your previous records. Would you like to continue?");
+                    warnDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            recordDao.update(race.getWorstRecord());
+                            recordDao.close();
+                            TimerActivity.this.finish();
+                        }
+                    });
+
+                    warnDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            recordDao.close();
+                            TimerActivity.this.finish();
+                        }
+                    });
+                    warnDialog.show();
+                }
             }
         });
 
@@ -266,7 +301,7 @@ public class TimerActivity extends AppCompatActivity {
     /**
      * Create markers
      */
-    public void makeMarkers() {
+    private void makeMarkers() {
         final LinearLayout markers = (LinearLayout) findViewById(R.id.linearLayout_timer_markers);
         for (int id = 0; id <= race.getMarkers() + 1; id++) {
             final Button markerBtn = new Button(this);
