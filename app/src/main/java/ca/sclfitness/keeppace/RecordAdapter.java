@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.Locale;
 
+import ca.sclfitness.keeppace.model.Race;
 import ca.sclfitness.keeppace.model.Record;
 
 /**
@@ -48,11 +49,12 @@ public class RecordAdapter extends ArrayAdapter<Record> {
             String unitText;
             if (unit.equals("2")) {
                 unitText = mContext.getString(R.string.pace_mile_per_hr);
+                paceText.setText(String.format(Locale.getDefault(), "%.2f %s", record.getAveragePace() * Race.MILE_CONVERSION, unitText));
             } else {
                 unitText = mContext.getString(R.string.pace_km_per_hr);
+                paceText.setText(String.format(Locale.getDefault(), "%.2f %s", record.getAveragePace(), unitText));
             }
 
-            paceText.setText(String.format(Locale.getDefault(), "%.2f %s", record.getAveragePace(), unitText));
             timeText.setText(record.timeTextFormat(record.getTime()));
         }
 
