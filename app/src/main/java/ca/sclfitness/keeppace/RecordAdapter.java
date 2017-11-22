@@ -1,0 +1,61 @@
+package ca.sclfitness.keeppace;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import java.util.List;
+import java.util.Locale;
+
+import ca.sclfitness.keeppace.model.Record;
+
+/**
+ * @author Jason, Tzu Hsiang Chen
+ * @since November 21, 2017
+ */
+
+public class RecordAdapter extends ArrayAdapter<Record> {
+
+    private Context mContext;
+
+    public RecordAdapter(Context context, List<Record> records) {
+        super(context, 0, records);
+        mContext = context;
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        Record record = getItem(position);
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.record_list_row, parent, false);
+        }
+
+        final TextView paceText = (TextView) convertView.findViewById(R.id.textView_recordList_pace);
+        final TextView timeText = (TextView) convertView.findViewById(R.id.textView_recordList_time);
+
+        if (record != null) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+            String unit = sharedPreferences.getString(mContext.getString(R.string.key_unit), "1");
+
+            String unitText;
+            if (unit.equals("2")) {
+                unitText = mContext.getString(R.string.pace_mile_per_hr);
+            } else {
+                unitText = mContext.getString(R.string.pace_km_per_hr);
+            }
+
+            paceText.setText(String.format(Locale.getDefault(), "%.2f %s", record.getAveragePace(), unitText));
+            timeText.setText(record.timeTextFormat(record.getTime()));
+        }
+
+        return convertView;
+    }
+}

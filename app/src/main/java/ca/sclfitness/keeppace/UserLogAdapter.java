@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 import ca.sclfitness.keeppace.model.Race;
+import ca.sclfitness.keeppace.model.Record;
 
 /**
  * @author Jason, Tzu Hsiang Chen
@@ -43,18 +44,22 @@ public class UserLogAdapter extends ArrayAdapter<Race> {
             nameView.setText(race.getName());
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
             String unit = sharedPreferences.getString(mContext.getString(R.string.key_unit), "1");
+
+            String unitText;
             if (unit.equals("2")) {
-                String pace = String.format(Locale.getDefault(), "%.2f " + mContext.getString(R.string.pace_mile_per_hr), race.convertToMile(race.getAveragePace()));
-                paceView.setText(pace);
+                unitText = mContext.getString(R.string.pace_mile_per_hr);
             } else {
-                String pace = String.format(Locale.getDefault(), "%.2f " + mContext.getString(R.string.pace_km_per_hr), race.getAveragePace());
-                paceView.setText(pace);
+                unitText = mContext.getString(R.string.pace_km_per_hr);
             }
 
-            if (race.getBestTime() == 0) {
-                bestTimeView.setText("--:--.--");
+            Record record = race.getBestRecord();
+
+            if (record != null) {
+                paceView.setText(String.format(Locale.getDefault(), "%.2f %s", record.getAveragePace(), unitText));
+                bestTimeView.setText(race.timeTextFormat(record.getTime()));
             } else {
-                bestTimeView.setText(race.bestTimeText());
+                bestTimeView.setText("--:--.--");
+                paceView.setText(String.format(Locale.getDefault(), "%.2f %s", 0.00, unitText));
             }
         }
 

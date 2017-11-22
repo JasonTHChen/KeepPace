@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/KeepPaceBlue</item>
         <item name="colorPrimaryDark">@color/DarkKeepPaceBlue</item>
         <item name="colorAccent">@color/AccentKeepPaceBlue</item>
+        <item name="actionModeShareDrawable">@drawable/ic_cloud_upload_white_24dp</item>
     </style>
 
     <!-- General button layout -->

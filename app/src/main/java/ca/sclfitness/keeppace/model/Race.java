@@ -1,5 +1,7 @@
 package ca.sclfitness.keeppace.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -12,20 +14,29 @@ import java.util.Locale;
 
 public class Race {
     public static final double MILE_CONVERSION = 0.6214;
+    public static final int MAX_RECORD_SETS = 10;
+    public static final String DEFAULT_UNIT = "km";
     private int mId;
     private String mName;
     private double mDistance;
     private int mMarkers;
     private double mAveragePace;
-    private long mBestTime;
+    private long mTime;
     private String mUnit;
+    private List<Record> mRecords;
 
     /**
      * Default constructor
      */
     public Race() {
+        this.mId = 0;
         this.mName = "";
-        this.mUnit = "km";
+        this.mDistance = 0.0;
+        this.mMarkers = 0;
+        this.mAveragePace = 0.00;
+        this.mTime = 0;
+        this.mUnit = DEFAULT_UNIT;
+        mRecords = new ArrayList<>(MAX_RECORD_SETS);
     }
 
     /**
@@ -35,12 +46,76 @@ public class Race {
      * @param markers - total markers of the race
      */
     public Race(String name, double distance, int markers) {
+        this.mId = 0;
         this.mName = name;
         this.mDistance = distance;
         this.mMarkers = markers;
         this.mAveragePace = 0.00;
-        this.mBestTime = 0;
-        this.mUnit = "km";
+        this.mTime = 0;
+        this.mUnit = DEFAULT_UNIT;
+        mRecords = new ArrayList<>(MAX_RECORD_SETS);
+    }
+
+    /**
+     * replace a record with new record
+     * @param recordId - record Id
+     * @param newRecord - a new record
+     */
+    public void replace(int recordId, Record newRecord) {
+        for (Record record : mRecords) {
+            if (record.getId() == recordId) {
+                record.setTime(newRecord.getTime());
+                record.setAveragePace(newRecord.getAveragePace());
+            }
+        }
+    }
+
+    /**
+     * Get worst record
+     * @return a worst record from a list
+     */
+    public Record getWorstRecord() {
+        if (mRecords.size() == 0) {
+            return null;
+        }
+
+        Record record = mRecords.get(0);
+        for (int i = 1; i < mRecords.size(); i++) {
+            if (mRecords.get(i).getTime() > record.getTime()) {
+                record = mRecords.get(i);
+            }
+        }
+        return record;
+    }
+
+    /**
+     * Get the best time from records
+     * @return the best time of the race
+     */
+    public Record getBestRecord() {
+        if (mRecords.size() == 0) {
+            return null;
+        }
+        Record record = mRecords.get(0);
+        for (int i = 1; i < mRecords.size(); i++) {
+            if (mRecords.get(i).getTime() < record.getTime()) {
+                record = mRecords.get(i);
+            }
+        }
+        return record;
+    }
+
+    /**
+     * Add record to the list of records
+     * @param record - a record object
+     * @return true if the size of the list is less than equal to 10; otherwise, false
+     */
+    public boolean addRecord(Record record) {
+        if (mRecords.size() >= MAX_RECORD_SETS) {
+            return false;
+        }
+        mRecords.add(record);
+        return true;
     }
 
     /**
@@ -130,8 +205,8 @@ public class Race {
      * Converts best time to String
      * @return String format hh:mm:ss or mm:ss.ss
      */
-    public String bestTimeText() {
-        return timeTextFormat(mBestTime);
+    public String getTimeText() {
+        return timeTextFormat(mTime);
     }
 
     /**
@@ -230,18 +305,18 @@ public class Race {
 
     /**
      * Get best time of the race
-     * @return mBestTime - best time of the race as String
+     * @return mTime - best time of the race as String
      */
-    public long getBestTime() {
-        return mBestTime;
+    public long getTime() {
+        return mTime;
     }
 
     /**
      * Set best time of the race
-     * @param bestTime - best time
+     * @param time - best time
      */
-    public void setBestTime(long bestTime) {
-        this.mBestTime = bestTime;
+    public void setTime(long time) {
+        this.mTime = time;
     }
 
     /**
@@ -260,15 +335,23 @@ public class Race {
         this.mUnit = unit;
     }
 
-    @Override
-    public String toString() {
-        return "Race{" +
-                "mId=" + mId +
-                ", mName='" + mName + '\'' +
-                ", mDistance=" + mDistance +
-                ", mMarkers=" + mMarkers +
-                ", mAveragePace=" + mAveragePace +
-                ", mBestTime='" + mBestTime + '\'' +
-                '}';
+    /**
+     * Get records of the race
+     * @return - a list of records
+     */
+    public List<Record> getRecords() {
+        return mRecords;
+    }
+
+    /**
+     * Set a list of records
+     * @param records - a list of records
+     */
+    public void setRecords(List<Record> records) {
+        // Can only save up to 10 records per race
+        if (records.size() > MAX_RECORD_SETS) {
+            return;
+        }
+        this.mRecords = records;
     }
 }

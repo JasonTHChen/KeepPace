@@ -24,10 +24,14 @@
 
     <!-- UserLogActivity -->
     <string name="userLog_title">User Log</string>
-    <string name="upload_title">Upload Records</string>
     <string name="userLog_raceName">Name</string>
     <string name="userLog_avgPace">Avg. Pace</string>
     <string name="userLog_bestTime">Best Time</string>
+
+    <!-- RecordsActivity -->
+    <string name="records_pace">Avg.Pace</string>
+    <string name="records_time">Time</string>
+    <string name="upload_title">Upload Records</string>
 
     <!-- GetStartedActivity -->
     <string name="getStarted">GET STARTED</string>
@@ -36,11 +40,14 @@
     <!-- MainActivity -->
     <string name="main_title">KEEP PACE</string>
     <string name="main_grindPace">GRIND PACE</string>
+    <string name="main_fullCrunch">FULL CRUNCH</string>
+    <string name="main_stairCrunch">STAIR CRUNCH</string>
     <string name="main_racePace">RACE PACE</string>
 
     <!-- PaceActivity -->
     <string name="pace_beatTime">BEAT YOUR BEST</string>
     <string name="pace_grind">JUST GRIND</string>
+    <string name="pace_crunch">JUST CRUNCH</string>
     <string name="pace_race">JUST RACE</string>
 
     <!-- RaceActivity -->

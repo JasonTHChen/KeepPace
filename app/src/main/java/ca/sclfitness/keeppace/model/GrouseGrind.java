@@ -6,9 +6,9 @@ package ca.sclfitness.keeppace.model;
  */
 
 public class GrouseGrind extends Race {
-    public static final double MARKER_1 = 0.39;
-    public static final double MARKER_2 = 0.57;
-    public static final double MARKER_3 = 0.82;
+    private static final double MARKER_1 = 0.39;
+    private static final double MARKER_2 = 0.57;
+    private static final double MARKER_3 = 0.82;
     public static final String GROUSE_GRIND = "Grouse Grind";
 
     @Override

@@ -59,6 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.i(TAG, "Create SQLite database version " + DATABASE_VERSION);
         try {
             db.execSQL(IRace.CREATE_RACE_TABLE);
+            db.execSQL(IRecord.CREATE_RECORD_TABLE);
             // insert races
             Race[] races = new RaceSeed().getRaces();
             for (Race race : races) {
@@ -84,6 +85,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.i(TAG, "Upgrade SQLite database from version " + oldVersion + " to version " + newVersion);
             try {
                 db.execSQL(IRace.DROP_RACE_TABLE);
+                db.execSQL(IRecord.DROP_RECORD_TABLE);
                 this.onCreate(db);
             } catch (SQLiteException e) {
                 Log.e(TAG, "Cannot upgrade table - " + e.getMessage());
@@ -103,8 +105,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(IRace.RACE_NAME_COLUMN, race.getName());
         values.put(IRace.RACE_DISTANCE_COLUMN, race.getDistance());
         values.put(IRace.RACE_MARKERS_COLUMN, race.getMarkers());
-        values.put(IRace.RACE_AVERAGE_PACE_COLUMN, race.getAveragePace());
-        values.put(IRace.RACE_BEST_TIME_COLUMN, race.getBestTime());
 
         long result = db.insert(IRace.RACE_TABLE_NAME, null, values);
         Log.d(TAG, "insert races " + result + " rows");

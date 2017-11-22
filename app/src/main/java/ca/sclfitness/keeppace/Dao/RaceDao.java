@@ -1,6 +1,5 @@
 package ca.sclfitness.keeppace.Dao;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,38 +10,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.sclfitness.keeppace.database.IRace;
+import ca.sclfitness.keeppace.model.FullCrunch;
 import ca.sclfitness.keeppace.model.GrouseGrind;
 import ca.sclfitness.keeppace.model.Race;
+import ca.sclfitness.keeppace.model.Record;
+import ca.sclfitness.keeppace.model.StairCrunch;
 
 /**
- * RaceDao is a data access object class which
- * saves user's best time and average pace into different races.
- * Searches user's best time and average pace of different races.
- *
- * @version kp 1.0
  * @author Jason, Tzu Hsiang Chen
- * @since November 12, 2017
+ * @since November 19, 2017
  */
 
 public class RaceDao extends Dao {
+
     private static final String TAG = RaceDao.class.getSimpleName();
+    private Context mContext;
 
     public RaceDao(Context context) {
         super(context, IRace.RACE_TABLE_NAME);
-    }
-
-    /**
-     * Update average pace and best time.
-     *
-     * @param race - race object.
-     */
-    public void update(Race race) {
-        ContentValues values = new ContentValues();
-        values.put(IRace.RACE_AVERAGE_PACE_COLUMN, race.getAveragePace());
-        values.put(IRace.RACE_BEST_TIME_COLUMN, race.getBestTime());
-        String[] args = {race.getName()};
-        Log.i(TAG, "Updating average pace and best time");
-        super.update(IRace.RACE_NAME_COLUMN, args, values);
+        this.mContext = context;
     }
 
     /**
@@ -56,13 +42,19 @@ public class RaceDao extends Dao {
         try {
             SQLiteDatabase db = dbHelper.getReadableDatabase();
             Cursor cursor = db.rawQuery("SELECT DISTINCT * FROM " + IRace.RACE_TABLE_NAME
-                    + " WHERE " + IRace.RACE_NAME_COLUMN + " = '" + name +"';", null);
+                    + " WHERE " + IRace.RACE_NAME_COLUMN + " = '" + name + "';", null);
 
             Log.d(TAG, "Found race " + cursor.getCount() + " row");
             if (cursor.moveToFirst()) {
                 if (name.equalsIgnoreCase(GrouseGrind.GROUSE_GRIND)) {
                     Log.d(TAG, "Grouse Grind initialized");
                     race = new GrouseGrind();
+                } else if (name.equalsIgnoreCase(FullCrunch.FULL_CRUNCH)) {
+                    Log.d(TAG, "Full Crunch initialized");
+                    race = new FullCrunch();
+                } else if (name.equalsIgnoreCase(StairCrunch.STAIR_CRUNCH)) {
+                    Log.d(TAG, "Stair Crunch initialized");
+                    race = new StairCrunch();
                 } else {
                     Log.d(TAG, "Basic race initialized");
                     race = new Race();
@@ -71,8 +63,6 @@ public class RaceDao extends Dao {
                 race.setName(cursor.getString(1));
                 race.setDistance(cursor.getDouble(2));
                 race.setMarkers(cursor.getInt(3));
-                race.setAveragePace(cursor.getDouble(4));
-                race.setBestTime(cursor.getLong(5));
             }
             cursor.close();
             db.close();
@@ -103,8 +93,12 @@ public class RaceDao extends Dao {
                     race.setName(cursor.getString(1));
                     race.setDistance(cursor.getDouble(2));
                     race.setMarkers(cursor.getInt(3));
-                    race.setAveragePace(cursor.getDouble(4));
-                    race.setBestTime(cursor.getLong(5));
+                    RecordDao recordDao = new RecordDao(mContext);
+                    List<Record> records = recordDao.findRecordsByRaceId(cursor.getInt(0));
+                    if (records != null) {
+                        race.setRecords(records);
+                    }
+                    recordDao.close();
                     races.add(race);
                 } while (cursor.moveToNext());
             }
@@ -114,5 +108,32 @@ public class RaceDao extends Dao {
             Log.e(TAG, e.getMessage());
         }
         return races;
+    }
+
+    public Race getRaceByIdWithRecords(int raceId) {
+        Race race = null;
+        try {
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            Cursor cursor = db.rawQuery("SELECT DISTINCT * FROM " + IRace.RACE_TABLE_NAME
+                    + " WHERE " + IRace.RACE_ID_COLUMN + " = '" + raceId + "';", null);
+
+            Log.d(TAG, "Found race " + cursor.getCount() + " row");
+            if (cursor.getCount() == 1 && cursor.moveToFirst()) {
+                race.setId(cursor.getInt(0));
+                race.setName(cursor.getString(1));
+                race.setDistance(cursor.getDouble(2));
+                race.setMarkers(cursor.getInt(3));
+                RecordDao recordDao = new RecordDao(mContext);
+                List<Record> records = recordDao.findRecordsByRaceId(raceId);
+                race.setRecords(records);
+                recordDao.close();
+            }
+            cursor.close();
+            db.close();
+        } catch (SQLiteException e) {
+            Log.e(TAG, e.getMessage());
+        }
+
+        return race;
     }
 }
