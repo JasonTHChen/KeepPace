@@ -39,10 +39,12 @@ public class RecordAdapter extends ArrayAdapter<Record> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.record_list_row, parent, false);
         }
 
+        final TextView dateText = (TextView) convertView.findViewById(R.id.textView_recordList_date);
         final TextView paceText = (TextView) convertView.findViewById(R.id.textView_recordList_pace);
         final TextView timeText = (TextView) convertView.findViewById(R.id.textView_recordList_time);
 
         if (record != null) {
+            dateText.setText(record.getDate());
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
             String unit = sharedPreferences.getString(mContext.getString(R.string.key_unit), "1");
 

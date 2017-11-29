@@ -63,6 +63,12 @@ public class RaceDao extends Dao {
                 race.setName(cursor.getString(1));
                 race.setDistance(cursor.getDouble(2));
                 race.setMarkers(cursor.getInt(3));
+                RecordDao recordDao = new RecordDao(mContext);
+                List<Record> records = recordDao.findRecordsByRaceId(cursor.getInt(0));
+                if (records != null) {
+                    race.setRecords(records);
+                }
+                recordDao.close();
             }
             cursor.close();
             db.close();

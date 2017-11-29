@@ -56,15 +56,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(grindPaceIntent);
     }
 
-    public void onClickFullCrunch(View v) {
-        Intent i = new Intent(this, PaceActivity.class);
-        i.putExtra("type", 2);    // grind pace
-        startActivity(i);
-    }
-
-    public void onClickStairCrunch(View v) {
-        Intent i = new Intent(this, PaceActivity.class);
-        i.putExtra("type", 3);    // grind pace
+    public void onClickCrunch(View v) {
+        Intent i = new Intent(this, CrunchPaceActivity.class);
         startActivity(i);
     }
 

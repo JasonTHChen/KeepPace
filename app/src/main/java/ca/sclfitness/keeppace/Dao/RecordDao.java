@@ -38,8 +38,9 @@ public class RecordDao extends Dao {
      */
     public void insert(Record record) {
         ContentValues values = new ContentValues();
-        values.put(IRecord.RECORD_TIME_COLUMN, record.getTime());
         values.put(IRecord.RECORD_AVERAGE_PACE_COLUMN, record.getAveragePace());
+        values.put(IRecord.RECORD_TIME_COLUMN, record.getTime());
+        values.put(IRecord.RECORD_DATE_COLUMN, record.getDate());
         values.put(IRace.RACE_ID_COLUMN, record.getRaceId());
         Log.i(TAG, "Inserting a new record");
         super.insert(values);
@@ -54,6 +55,7 @@ public class RecordDao extends Dao {
         ContentValues values = new ContentValues();
         values.put(IRecord.RECORD_AVERAGE_PACE_COLUMN, newRecord.getAveragePace());
         values.put(IRecord.RECORD_TIME_COLUMN, newRecord.getTime());
+        values.put(IRecord.RECORD_DATE_COLUMN, newRecord.getDate());
         String[] args = {String.valueOf(recordId)};
         Log.i(TAG, "Updating a record");
         super.update(IRecord.RECORD_ID_COLUMN, args, values);
@@ -80,7 +82,7 @@ public class RecordDao extends Dao {
         try {
             SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
             Cursor cursor = sqLiteDatabase.rawQuery("SELECT DISTINCT * FROM " + IRecord.RECORD_TABLE_NAME
-                    + " WHERE " + IRace.RACE_ID_COLUMN + " = '" + raceId + "';", null);
+                    + " WHERE " + IRace.RACE_ID_COLUMN + " = '" + raceId + "' ORDER BY " + IRecord.RECORD_TIME_COLUMN + ";", null);
             int count = cursor.getCount();
             Log.d(TAG, "Found races " + count + " row");
             if (count > 0 && cursor.moveToFirst()) {
@@ -90,7 +92,8 @@ public class RecordDao extends Dao {
                             cursor.getInt(0),
                             cursor.getDouble(1),
                             cursor.getLong(2),
-                            cursor.getInt(3)
+                            cursor.getString(3),
+                            cursor.getInt(4)
                     );
                     records.add(record);
                 } while (cursor.moveToNext());
