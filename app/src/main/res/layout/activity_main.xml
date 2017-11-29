@@ -12,37 +12,29 @@
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="80dp"
         android:onClick="onClickGrind"
         android:text="@string/main_grindPace" />
 
     <Button
-        android:id="@+id/button_main_fullCrunch"
+        android:id="@+id/button_main_crunchPace"
         style="@style/ButtonLayout"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_below="@+id/button_main_grindPace"
-        android:layout_marginTop="60dp"
-        android:onClick="onClickFullCrunch"
-        android:text="@string/main_fullCrunch" />
+        android:layout_marginTop="80dp"
+        android:onClick="onClickCrunch"
+        android:text="@string/main_crunchPace" />
 
-    <Button
-        android:id="@+id/button_main_stairCrunch"
-        style="@style/ButtonLayout"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/button_main_fullCrunch"
-        android:layout_marginTop="60dp"
-        android:onClick="onClickStairCrunch"
-        android:text="@string/main_stairCrunch" />
+
 
     <Button
         android:id="@+id/button_main_racePace"
         style="@style/ButtonLayout"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/button_main_stairCrunch"
-        android:layout_marginTop="60dp"
+        android:layout_below="@+id/button_main_crunchPace"
+        android:layout_marginTop="80dp"
         android:onClick="onClickRace"
         android:text="@string/main_racePace" />
 

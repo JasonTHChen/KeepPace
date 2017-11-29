@@ -1,6 +1,7 @@
 <resources>
     <!-- General -->
     <string name="app_name">KeepPace</string>
+    <string name="app_title">KP</string>
     <string name="pace_km_per_hr">km/h</string>
     <string name="pace_mile_per_hr">mi/h</string>
     <string name="km_unit">Km</string>
@@ -32,6 +33,7 @@
     <string name="records_pace">Avg.Pace</string>
     <string name="records_time">Time</string>
     <string name="upload_title">Upload Records</string>
+    <string name="records_date">Date</string>
 
     <!-- GetStartedActivity -->
     <string name="getStarted">GET STARTED</string>
@@ -40,6 +42,7 @@
     <!-- MainActivity -->
     <string name="main_title">KEEP PACE</string>
     <string name="main_grindPace">GRIND PACE</string>
+    <string name="main_crunchPace">CRUNCH PACE</string>
     <string name="main_fullCrunch">FULL CRUNCH</string>
     <string name="main_stairCrunch">STAIR CRUNCH</string>
     <string name="main_racePace">RACE PACE</string>

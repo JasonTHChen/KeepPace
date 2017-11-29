@@ -102,6 +102,8 @@ public class Race {
                 record = mRecords.get(i);
             }
         }
+
+        mTime = record.getTime();
         return record;
     }
 

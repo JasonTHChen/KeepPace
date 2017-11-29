@@ -12,17 +12,20 @@ public class Record {
     private double mAveragePace;
     private long mTime;
     private int mRaceId;
+    private String mDate;
 
-    public Record(double averagePace, long time, int raceId) {
+    public Record(double averagePace, long time, String date, int raceId) {
         this.mAveragePace = averagePace;
         this.mTime = time;
+        this.mDate = date;
         this.mRaceId = raceId;
     }
 
-    public Record(int id, double averagePace, long time, int raceId) {
+    public Record(int id, double averagePace, long time, String date, int raceId) {
         this.mId = id;
         this.mAveragePace = averagePace;
         this.mTime = time;
+        this.mDate = date;
         this.mRaceId = raceId;
     }
 
@@ -89,6 +92,14 @@ public class Record {
      */
     public void setRaceId(int raceId) {
         this.mRaceId = raceId;
+    }
+
+    public String getDate() {
+        return mDate;
+    }
+
+    public void setDate(String date) {
+        this.mDate = date;
     }
 
     /**

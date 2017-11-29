@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -91,6 +93,9 @@ public class TimerActivity extends AppCompatActivity {
 
         // setup race
         this.raceSetup(raceName);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(getResources().getString(R.string.app_title) + " - " + raceName);
+        }
 
         // Get unit preference
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -253,7 +258,10 @@ public class TimerActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 saveRace();
                 final RecordDao recordDao = new RecordDao(TimerActivity.this);
-                final Record record = new Record(race.getAveragePace(), race.getTime(), race.getId());
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("MMM. dd, yyyy", Locale.CANADA);
+                String currentDate = df.format(c.getTime());
+                final Record record = new Record(race.getAveragePace(), race.getTime(), currentDate, race.getId());
                 if (race.addRecord(record)) {
                     recordDao.insert(record);
                 } else {

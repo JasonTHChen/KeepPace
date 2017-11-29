@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.Locale;
 
+import ca.sclfitness.keeppace.model.Race;
 import ca.sclfitness.keeppace.model.Record;
 
 /**
@@ -38,21 +39,24 @@ public class RecordAdapter extends ArrayAdapter<Record> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.record_list_row, parent, false);
         }
 
+        final TextView dateText = (TextView) convertView.findViewById(R.id.textView_recordList_date);
         final TextView paceText = (TextView) convertView.findViewById(R.id.textView_recordList_pace);
         final TextView timeText = (TextView) convertView.findViewById(R.id.textView_recordList_time);
 
         if (record != null) {
+            dateText.setText(record.getDate());
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
             String unit = sharedPreferences.getString(mContext.getString(R.string.key_unit), "1");
 
             String unitText;
             if (unit.equals("2")) {
                 unitText = mContext.getString(R.string.pace_mile_per_hr);
+                paceText.setText(String.format(Locale.getDefault(), "%.2f %s", record.getAveragePace() * Race.MILE_CONVERSION, unitText));
             } else {
                 unitText = mContext.getString(R.string.pace_km_per_hr);
+                paceText.setText(String.format(Locale.getDefault(), "%.2f %s", record.getAveragePace(), unitText));
             }
 
-            paceText.setText(String.format(Locale.getDefault(), "%.2f %s", record.getAveragePace(), unitText));
             timeText.setText(record.timeTextFormat(record.getTime()));
         }
 

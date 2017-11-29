@@ -44,7 +44,6 @@ public class UserLogAdapter extends ArrayAdapter<Race> {
             nameView.setText(race.getName());
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
             String unit = sharedPreferences.getString(mContext.getString(R.string.key_unit), "1");
-
             String unitText;
             if (unit.equals("2")) {
                 unitText = mContext.getString(R.string.pace_mile_per_hr);
@@ -55,7 +54,11 @@ public class UserLogAdapter extends ArrayAdapter<Race> {
             Record record = race.getBestRecord();
 
             if (record != null) {
-                paceView.setText(String.format(Locale.getDefault(), "%.2f %s", record.getAveragePace(), unitText));
+                if (unit.equals("2")) {
+                    paceView.setText(String.format(Locale.getDefault(), "%.2f %s", record.getAveragePace() * Race.MILE_CONVERSION, unitText));
+                } else {
+                    paceView.setText(String.format(Locale.getDefault(), "%.2f %s", record.getAveragePace(), unitText));
+                }
                 bestTimeView.setText(race.timeTextFormat(record.getTime()));
             } else {
                 bestTimeView.setText("--:--.--");
