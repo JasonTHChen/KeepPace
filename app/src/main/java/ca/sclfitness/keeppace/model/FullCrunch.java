@@ -6,13 +6,13 @@ package ca.sclfitness.keeppace.model;
  */
 
 public class FullCrunch extends Race {
-    private static final double MARKER_1 = 11.66;
-    private static final double MARKER_2 = 39.16;
-    private static final double MARKER_3 = 41.66;
-    private static final double MARKER_4 = 58.33;
-    private static final double MARKER_5 = 68.75;
-    private static final double MARKER_6 = 73.33;
-    private static final double MARKER_7 = 88.33;
+    private static final double MARKER_1 = 0.1166;
+    private static final double MARKER_2 = 0.3916;
+    private static final double MARKER_3 = 0.4166;
+    private static final double MARKER_4 = 0.5833;
+    private static final double MARKER_5 = 0.6875;
+    private static final double MARKER_6 = 0.7333;
+    private static final double MARKER_7 = 0.8833;
 
     public static final String FULL_CRUNCH = "Full Crunch";
 
@@ -46,13 +46,13 @@ public class FullCrunch extends Race {
             case 2:
                 return "End Steps";
             case 3:
-                return "Panorama";
+                return "Lansdowne";
             case 4:
                 return "Bramble Park";
             case 5:
                 return "223m Elv.";
             case 6:
-                return "Lansdowne";
+                return "Panorama";
             case 7:
                 return "2.0 km";
             default:
