@@ -46,13 +46,13 @@ public class FullCrunch extends Race {
             case 2:
                 return "End Steps";
             case 3:
-                return "Lansdowne";
+                return "Panorama";
             case 4:
                 return "Bramble Park";
             case 5:
                 return "223m Elv.";
             case 6:
-                return "Panorama";
+                return "Lansdowne";
             case 7:
                 return "2.0 km";
             default:

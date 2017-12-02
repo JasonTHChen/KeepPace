@@ -37,7 +37,7 @@
 
     <!-- GetStartedActivity -->
     <string name="getStarted">GET STARTED</string>
-    <string name="TOS">By clicking above, you agree to Keep Pace\'s &lt;a href="http://www.google.com">Terms &amp; Conditions &lt;a></string>
+    <string name="TOS">By clicking above, you agree to Keep Pace\'s Terms of Service</string>
 
     <!-- MainActivity -->
     <string name="main_title">KEEP PACE</string>

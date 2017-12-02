@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,6 +30,8 @@ import ca.sclfitness.keeppace.Dao.RecordDao;
 import ca.sclfitness.keeppace.model.FullCrunch;
 import ca.sclfitness.keeppace.model.Race;
 import ca.sclfitness.keeppace.model.Record;
+
+import static android.R.color.transparent;
 
 public class TimerActivity extends AppCompatActivity {
     private static final String TAG = TimerActivity.class.getSimpleName();
@@ -68,6 +71,7 @@ public class TimerActivity extends AppCompatActivity {
 
     /**
      * Create timer activity
+     *
      * @param savedInstanceState - save current state
      */
     @Override
@@ -317,30 +321,121 @@ public class TimerActivity extends AppCompatActivity {
         final LinearLayout markers = (LinearLayout) findViewById(R.id.linearLayout_timer_markers);
         for (int id = 0; id <= race.getMarkers() + 1; id++) {
             final Button markerBtn = new Button(this);
-            markerBtn.setText(race.getMarkerName(id));
-            markerBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            if (id == 0 || id == (race.getMarkers() + 1)) {
-                markerBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button));
-                markerBtn.setVisibility(View.INVISIBLE);
-                markerBtn.setEnabled(false);
-            } else {
-                markerBtn.setId(id);
-                markerBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button));
-                markerBtn.setTextColor(Color.WHITE);
-                if (race.getName().equals(FullCrunch.FULL_CRUNCH)) {
-                    markerBtn.setTextSize(15);
-                } else {
-                    markerBtn.setTextSize(30);
-                }
-            }
 
-            markerBtn.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    onClickMarker(markerBtn.getId());
-                    scrollView.smoothScrollBy(markerBtn.getWidth(), 0);
+
+            final ImageButton markerImgBtn = new ImageButton(this);
+            if (race.getMarkerName(id) == "Beg steps") {
+                markerImgBtn.setImageResource(R.drawable.twox);
+                markerImgBtn.setBackground(null);
+                markerImgBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                markerBtn.setId(id);
+                markers.addView(markerImgBtn);
+                markerImgBtn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        onClickMarker(markerImgBtn.getId());
+                        scrollView.smoothScrollBy(markerImgBtn.getWidth(), 0);
+                    }
+                });
+            } else if (race.getMarkerName(id) == "End Steps") {
+                markerImgBtn.setImageResource(R.drawable.threex);
+                markerImgBtn.setBackground(null);
+                markerImgBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                markerBtn.setId(id);
+                markers.addView(markerImgBtn);
+                markerImgBtn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        onClickMarker(markerImgBtn.getId());
+                        scrollView.smoothScrollBy(markerImgBtn.getWidth(), 0);
+                    }
+                });
+            } else if (race.getMarkerName(id) == "Panorama") {
+                markerImgBtn.setImageResource(R.drawable.fourx);
+                markerImgBtn.setBackground(null);
+                markerImgBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                markerBtn.setId(id);
+                markers.addView(markerImgBtn);
+                markerImgBtn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        onClickMarker(markerImgBtn.getId());
+                        scrollView.smoothScrollBy(markerImgBtn.getWidth(), 0);
+                    }
+                });
+            } else if (race.getMarkerName(id) == "Bramble Park") {
+                markerImgBtn.setImageResource(R.drawable.fivex);
+                markerImgBtn.setBackground(null);
+                markerImgBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                markerBtn.setId(id);
+                markers.addView(markerImgBtn);
+                markerImgBtn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        onClickMarker(markerImgBtn.getId());
+                        scrollView.smoothScrollBy(markerImgBtn.getWidth(), 0);
+                    }
+                });
+            } else if (race.getMarkerName(id) == "223m Elv.") {
+                markerImgBtn.setImageResource(R.drawable.sixx);
+                markerImgBtn.setBackground(null);
+                markerImgBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                markerBtn.setId(id);
+                markers.addView(markerImgBtn);
+                markerImgBtn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        onClickMarker(markerImgBtn.getId());
+                        scrollView.smoothScrollBy(markerImgBtn.getWidth(), 0);
+                    }
+                });
+            } else if (race.getMarkerName(id) == "Lansdowne") {
+                markerImgBtn.setImageResource(R.drawable.sevenx);
+                markerImgBtn.setBackground(null);
+                markerImgBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                markerBtn.setId(id);
+                markers.addView(markerImgBtn);
+                markerImgBtn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        onClickMarker(markerImgBtn.getId());
+                        scrollView.smoothScrollBy(markerImgBtn.getWidth(), 0);
+                    }
+                });
+            } else if (race.getMarkerName(id) == "2.0 km") {
+                markerImgBtn.setImageResource(R.drawable.eightx);
+                markerImgBtn.setBackground(null);
+                markerImgBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                markerBtn.setId(id);
+                markers.addView(markerImgBtn);
+                markerImgBtn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        onClickMarker(markerImgBtn.getId());
+                        scrollView.smoothScrollBy(markerImgBtn.getWidth(), 0);
+                    }
+                });
+
+            } else {
+
+                markerBtn.setText(race.getMarkerName(id));
+                markerBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                if (id == 0 || id == (race.getMarkers() + 1)) {
+                    markerBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button));
+                    markerBtn.setVisibility(View.INVISIBLE);
+                    markerBtn.setEnabled(false);
+                } else {
+                    markerBtn.setId(id);
+                    markerBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button));
+                    markerBtn.setTextColor(Color.WHITE);
+                    if (race.getName().equals(FullCrunch.FULL_CRUNCH)) {
+                        markerBtn.setTextSize(15);
+                    } else {
+                        markerBtn.setTextSize(30);
+                    }
                 }
-            });
-            markers.addView(markerBtn);
+
+                markerBtn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        onClickMarker(markerBtn.getId());
+                        scrollView.smoothScrollBy(markerBtn.getWidth(), 0);
+                    }
+                });
+                markers.addView(markerBtn);
+            }
         }
 
 
