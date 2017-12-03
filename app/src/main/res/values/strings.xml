@@ -59,7 +59,7 @@
     <string name="pace_beatTime">BEAT YOUR BEST</string>
     <string name="pace_grind">JUST GRIND</string>
     <string name="pace_crunch">JUST CRUNCH</string>
-    <string name="pace_steps">JUST STEPS</string>
+    <string name="pace_steps">JUST STEP</string>
     <string name="pace_race">JUST RACE</string>
 
     <!-- RaceActivity -->
