@@ -32,7 +32,7 @@ public class PaceActivity extends AppCompatActivity {
                 raceTypeBtn.setText(getString(R.string.pace_crunch));
                 break;
             case 3:
-                raceTypeBtn.setText(getString(R.string.pace_crunch));
+                raceTypeBtn.setText(getString(R.string.pace_steps));
                 break;
             default:
                 System.err.println("passing error code " + paceType);

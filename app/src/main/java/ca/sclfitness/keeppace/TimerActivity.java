@@ -1,5 +1,6 @@
 package ca.sclfitness.keeppace;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -229,8 +232,13 @@ public class TimerActivity extends AppCompatActivity {
             long estimateTime = race.getEstimateTime(currentPace);
             if (race.getTime() != 0 && beatTime) {
                 if (estimateTime < race.getTime()) {
+                    Toast.makeText(this, "Great Job! Keep Up Your Pace...", Toast.LENGTH_SHORT).show();
                     estimatedTimeView.setTextColor(Color.GREEN);
                 } else {
+                    Toast.makeText(this, "Pick Up Your Pace!", Toast.LENGTH_SHORT).show();
+                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    // Vibrate for 500 milliseconds
+                    v.vibrate(800);
                     estimatedTimeView.setTextColor(Color.RED);
                 }
             }
@@ -279,7 +287,6 @@ public class TimerActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             recordDao.update(race.getWorstRecord().getId(), record);
                             recordDao.close();
-                            TimerActivity.this.finish();
                         }
                     });
 
@@ -287,11 +294,11 @@ public class TimerActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             recordDao.close();
-                            TimerActivity.this.finish();
                         }
                     });
                     warnDialog.show();
                 }
+                TimerActivity.this.finish();
             }
         });
 

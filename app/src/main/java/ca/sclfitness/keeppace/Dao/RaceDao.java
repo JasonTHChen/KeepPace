@@ -116,6 +116,11 @@ public class RaceDao extends Dao {
         return races;
     }
 
+    /**
+     * Get the race along with records
+     * @param raceId
+     * @return
+     */
     public Race getRaceByIdWithRecords(int raceId) {
         Race race = null;
         try {

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.sclfitness.keeppace">
 
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -37,24 +39,26 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".UserLogActivity"
-            android:label="@string/userLog_title"
             android:configChanges="orientation"
+            android:label="@string/userLog_title"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SettingsActivity"
+            android:configChanges="orientation"
             android:label="@string/title_activity_settings"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RecordsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".RecordsActivity"
+        <activity
+            android:name=".CrunchPaceActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".CrunchPaceActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
-        <activity android:name=".Pop"
+        <activity
+            android:name=".Pop"
             android:label="Keep Pace Terms Of Service"
-            android:theme="@style/TranslucentPopUp"
-            ></activity>
+            android:theme="@style/TranslucentPopUp" />
     </application>
 
 </manifest>
