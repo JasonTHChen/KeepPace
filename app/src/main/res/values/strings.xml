@@ -18,6 +18,13 @@
         <item>Mile</item>
     </string-array>
 
+    <string name="mode_dialog_title">Select a mode</string>
+    <string name="key_mode">key_mode</string>
+    <string-array name="mode_list">
+        <item>Regular</item>
+        <item>Pro</item>
+    </string-array>
+
     <string-array name="list_value">
         <item>1</item>
         <item>2</item>
@@ -69,6 +76,7 @@
     <string name="timer_startMarker">Start</string>
     <string name="timer_pause">Pause</string>
     <string name="timer_resume">Resume</string>
+    <string name="timer_reset">Reset</string>
     <string name="timer_finish">Finish</string>
     <string name="timer_save">Save</string>
     <string name="title_activity_settings">Settings</string>

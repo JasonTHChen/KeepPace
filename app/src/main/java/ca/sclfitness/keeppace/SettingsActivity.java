@@ -64,6 +64,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_main);
             bindPreferenceSummaryToValue(findPreference(getString(R.string.key_unit)));
+            bindPreferenceSummaryToValue(findPreference(getString(R.string.key_mode)));
+
         }
     }
 }
