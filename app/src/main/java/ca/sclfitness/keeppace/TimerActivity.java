@@ -33,6 +33,8 @@ import ca.sclfitness.keeppace.model.FullCrunch;
 import ca.sclfitness.keeppace.model.Race;
 import ca.sclfitness.keeppace.model.Record;
 
+import static android.view.View.GONE;
+
 public class TimerActivity extends AppCompatActivity {
     private static final String TAG = TimerActivity.class.getSimpleName();
 
@@ -53,7 +55,7 @@ public class TimerActivity extends AppCompatActivity {
     private Handler handler;
     private long millisecondTime, startTime, timeBuff, updateTime = 0L;
     // buttons
-    private Button pauseResumeBtn, saveBtn, startBtn;
+    private Button pauseResumeBtn, saveBtn, startBtn, resetBtn;
 
     // markers scroll view
     private HorizontalScrollView scrollView;
@@ -86,11 +88,14 @@ public class TimerActivity extends AppCompatActivity {
         beatTimeLabel = (TextView) findViewById(R.id.textView_timer_beatTimeLabel);
         beatTimeView = (TextView) findViewById(R.id.textView_timer_beatTime);
         pauseResumeBtn = (Button) findViewById(R.id.button_timer_pauseResume);
+        resetBtn = (Button) findViewById(R.id.button_timer_reset);
         startBtn = (Button) findViewById(R.id.button_timer_start);
         saveBtn = (Button) findViewById(R.id.button_timer_save);
         scrollView = (HorizontalScrollView) findViewById(R.id.scrollView_timer_markers);
 
+
         //scrollView.setScroll
+
         Intent intent = getIntent();
         beatTime = intent.getBooleanExtra("beatTime", false);
         String raceName = intent.getStringExtra("raceType");
@@ -110,6 +115,8 @@ public class TimerActivity extends AppCompatActivity {
         } else {
             currentSpeedView.append(" " + getString(R.string.pace_km_per_hr));
         }
+
+
 
         // make markers scroll view based on the race
         if (race.getName().equals(FullCrunch.FULL_CRUNCH)) {
@@ -160,13 +167,24 @@ public class TimerActivity extends AppCompatActivity {
      * Start the timer if the race is not finished
      */
     private void startTimer() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
         if (!isFinished) {
             startTime = SystemClock.uptimeMillis();
             handler.postDelayed(runnable, 0);
-            pauseResumeBtn.setEnabled(true);
-            pauseResumeBtn.setVisibility(View.VISIBLE);
-            startBtn.setVisibility(View.GONE);
+            startBtn.setVisibility(GONE);
             isPaused = false;
+
+            String mode = sharedPreferences.getString(getString(R.string.key_mode), "1");
+            if (mode.equals("2")) {
+                pauseResumeBtn.setVisibility(GONE);
+                pauseResumeBtn.setEnabled(false);
+                resetBtn.setEnabled(true);
+            } else {
+                pauseResumeBtn.setEnabled(true);
+                pauseResumeBtn.setVisibility(View.VISIBLE);
+                resetBtn.setEnabled(true);
+            }
         }
     }
 
@@ -201,6 +219,12 @@ public class TimerActivity extends AppCompatActivity {
         isFinished = false;
     }
 
+    public void onClickReset(View v) {
+        Intent intent = getIntent();
+        startActivity(intent);
+        finish();
+    }
+
     /**
      * Set on click for the marker buttons
      *
@@ -220,12 +244,14 @@ public class TimerActivity extends AppCompatActivity {
 
         if (distance == race.getMarkers()) {
             // finish
+            resetBtn.setVisibility(View.GONE);
+            resetBtn.setEnabled(false);
             BigDecimal bd = new BigDecimal(pace);
             bd = bd.setScale(2, RoundingMode.FLOOR);
             pace = bd.doubleValue();
             race.setAveragePace(pace);
             isFinished = true;
-            scrollView.setVisibility(View.GONE);
+            scrollView.setVisibility(GONE);
             pauseTimer();
         } else {
             // increment marker
@@ -263,6 +289,7 @@ public class TimerActivity extends AppCompatActivity {
      * @param v - view object
      */
     public void onClickSave(View v) {
+
         final AlertDialog alertDialog = new AlertDialog.Builder(TimerActivity.this).create();
         alertDialog.setTitle("Saving Log");
         alertDialog.setMessage("Would you like to save the race?");
