@@ -12,6 +12,7 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -61,6 +62,9 @@ public class TimerActivity extends AppCompatActivity {
     // markers margin
     private final int BTN_MARGIN = 100;
 
+    // button marker size
+    private int btn_size;
+
     // dp scale
     private final int SCALE = 3;
 
@@ -84,6 +88,11 @@ public class TimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        btn_size = (int)(height * 0.2);
 
         // views
         currentTimeView = (TextView) findViewById(R.id.textView_timer_currentTime);
@@ -336,10 +345,11 @@ public class TimerActivity extends AppCompatActivity {
         for (int id = 0; id <= race.getMarkers() + 1; id++) {
             final Button markerBtn = new Button(this);
             markerBtn.setText(race.getMarkerName(id));
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(BTN_MARGIN * SCALE, BTN_MARGIN * SCALE);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(btn_size, btn_size);
             params.setMargins(0, 0, BTN_MARGIN, 0);
             markerBtn.setLayoutParams(params);
             if (id == 0 || id == (race.getMarkers() + 1)) {
+                markerBtn.setLayoutParams(new LinearLayout.LayoutParams(btn_size, btn_size));
                 markerBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button));
                 markerBtn.setVisibility(View.INVISIBLE);
                 markerBtn.setEnabled(false);
@@ -366,10 +376,11 @@ public class TimerActivity extends AppCompatActivity {
         final LinearLayout markers = (LinearLayout) findViewById(R.id.linearLayout_timer_markers);
         for (int id = 0; id <= race.getMarkers() + 1; id++) {
             final Button markerBtn = new Button(this);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(BTN_MARGIN * SCALE, BTN_MARGIN * SCALE);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(btn_size, btn_size);
             params.setMargins(0, 0, BTN_MARGIN, 0);
             markerBtn.setLayoutParams(params);
             if (id == 0 || id == (race.getMarkers() + 1)) {
+                markerBtn.setLayoutParams(new LinearLayout.LayoutParams(btn_size, btn_size));
                 markerBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button));
                 markerBtn.setVisibility(View.INVISIBLE);
                 markerBtn.setEnabled(false);
