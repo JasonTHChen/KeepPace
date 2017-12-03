@@ -12,6 +12,7 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -60,6 +61,15 @@ public class TimerActivity extends AppCompatActivity {
     // markers scroll view
     private HorizontalScrollView scrollView;
 
+    // markers margin
+    private final int BTN_MARGIN = 100;
+
+    // button marker size
+    private int btn_size;
+
+    // dp scale
+    private final int SCALE = 3;
+
     // Timer thread
     private Runnable runnable = new Runnable() {
         @Override
@@ -80,6 +90,11 @@ public class TimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        btn_size = (int)(height * 0.2);
 
         // views
         currentTimeView = (TextView) findViewById(R.id.textView_timer_currentTime);
@@ -357,8 +372,11 @@ public class TimerActivity extends AppCompatActivity {
         for (int id = 0; id <= race.getMarkers() + 1; id++) {
             final Button markerBtn = new Button(this);
             markerBtn.setText(race.getMarkerName(id));
-            markerBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(btn_size, btn_size);
+            params.setMargins(0, 0, BTN_MARGIN, 0);
+            markerBtn.setLayoutParams(params);
             if (id == 0 || id == (race.getMarkers() + 1)) {
+                markerBtn.setLayoutParams(new LinearLayout.LayoutParams(btn_size, btn_size));
                 markerBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button));
                 markerBtn.setVisibility(View.INVISIBLE);
                 markerBtn.setEnabled(false);
@@ -368,11 +386,10 @@ public class TimerActivity extends AppCompatActivity {
                 markerBtn.setTextColor(Color.WHITE);
                 markerBtn.setTextSize(30);
             }
-
             markerBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     onClickMarker(markerBtn.getId());
-                    scrollView.smoothScrollBy(markerBtn.getWidth(), 0);
+                    scrollView.smoothScrollBy(markerBtn.getWidth() + BTN_MARGIN, 0);
                 }
             });
             markers.addView(markerBtn);
@@ -386,8 +403,11 @@ public class TimerActivity extends AppCompatActivity {
         final LinearLayout markers = (LinearLayout) findViewById(R.id.linearLayout_timer_markers);
         for (int id = 0; id <= race.getMarkers() + 1; id++) {
             final Button markerBtn = new Button(this);
-            markerBtn.setLayoutParams(new LinearLayout.LayoutParams(200, 200));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(btn_size, btn_size);
+            params.setMargins(0, 0, BTN_MARGIN, 0);
+            markerBtn.setLayoutParams(params);
             if (id == 0 || id == (race.getMarkers() + 1)) {
+                markerBtn.setLayoutParams(new LinearLayout.LayoutParams(btn_size, btn_size));
                 markerBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button));
                 markerBtn.setVisibility(View.INVISIBLE);
                 markerBtn.setEnabled(false);
@@ -423,7 +443,7 @@ public class TimerActivity extends AppCompatActivity {
             markerBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     onClickMarker(markerBtn.getId());
-                    scrollView.smoothScrollBy(markerBtn.getWidth(), 0);
+                    scrollView.smoothScrollBy(markerBtn.getWidth() + BTN_MARGIN, 0);
                 }
             });
 
