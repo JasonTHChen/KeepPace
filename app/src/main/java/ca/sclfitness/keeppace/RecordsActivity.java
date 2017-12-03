@@ -103,7 +103,8 @@ public class RecordsActivity extends AppCompatActivity {
         String raceName = getIntent().getStringExtra("raceName");
         String recordsShareText = raceName + "\n";
         for (Record record : records) {
-            String temp = record.getDate() + "          " + record.getAveragePace() + " km      " + record.timeTextFormat(record.getTime()) + "\n";
+            String header = "DATE";
+            String temp = record.getDate() + "  " + record.getAveragePace() + "km  " + record.timeTextFormat(record.getTime()) + "\n";
             recordsShareText += temp;
         }
 
