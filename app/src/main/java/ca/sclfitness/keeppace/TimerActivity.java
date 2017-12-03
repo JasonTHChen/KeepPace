@@ -58,6 +58,12 @@ public class TimerActivity extends AppCompatActivity {
     // markers scroll view
     private HorizontalScrollView scrollView;
 
+    // markers margin
+    private final int BTN_MARGIN = 100;
+
+    // dp scale
+    private final int SCALE = 3;
+
     // Timer thread
     private Runnable runnable = new Runnable() {
         @Override
@@ -330,7 +336,9 @@ public class TimerActivity extends AppCompatActivity {
         for (int id = 0; id <= race.getMarkers() + 1; id++) {
             final Button markerBtn = new Button(this);
             markerBtn.setText(race.getMarkerName(id));
-            markerBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(BTN_MARGIN * SCALE, BTN_MARGIN * SCALE);
+            params.setMargins(0, 0, BTN_MARGIN, 0);
+            markerBtn.setLayoutParams(params);
             if (id == 0 || id == (race.getMarkers() + 1)) {
                 markerBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button));
                 markerBtn.setVisibility(View.INVISIBLE);
@@ -341,11 +349,10 @@ public class TimerActivity extends AppCompatActivity {
                 markerBtn.setTextColor(Color.WHITE);
                 markerBtn.setTextSize(30);
             }
-
             markerBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     onClickMarker(markerBtn.getId());
-                    scrollView.smoothScrollBy(markerBtn.getWidth(), 0);
+                    scrollView.smoothScrollBy(markerBtn.getWidth() + BTN_MARGIN, 0);
                 }
             });
             markers.addView(markerBtn);
@@ -359,7 +366,9 @@ public class TimerActivity extends AppCompatActivity {
         final LinearLayout markers = (LinearLayout) findViewById(R.id.linearLayout_timer_markers);
         for (int id = 0; id <= race.getMarkers() + 1; id++) {
             final Button markerBtn = new Button(this);
-            markerBtn.setLayoutParams(new LinearLayout.LayoutParams(200, 200));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(BTN_MARGIN * SCALE, BTN_MARGIN * SCALE);
+            params.setMargins(0, 0, BTN_MARGIN, 0);
+            markerBtn.setLayoutParams(params);
             if (id == 0 || id == (race.getMarkers() + 1)) {
                 markerBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button));
                 markerBtn.setVisibility(View.INVISIBLE);
@@ -396,7 +405,7 @@ public class TimerActivity extends AppCompatActivity {
             markerBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     onClickMarker(markerBtn.getId());
-                    scrollView.smoothScrollBy(markerBtn.getWidth(), 0);
+                    scrollView.smoothScrollBy(markerBtn.getWidth() + BTN_MARGIN, 0);
                 }
             });
 
