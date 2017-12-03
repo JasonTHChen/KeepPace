@@ -67,7 +67,7 @@ public class PaceActivity extends AppCompatActivity {
             intent.putExtra("raceType", "Full Crunch");
         } else if (paceType == 3) {
             intent = new Intent(this, TimerActivity.class);
-            intent.putExtra("raceType", "437 Step");
+            intent.putExtra("raceType", "437 Steps");
         } else {
             System.err.println("passing error code " + paceType);
             finish();
