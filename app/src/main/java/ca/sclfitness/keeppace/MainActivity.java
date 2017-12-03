@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        startActivity(new Intent(this, SplashActivity.class));
         SharedPreferences settings = getSharedPreferences("prefs", 0);
         boolean firstRun = settings.getBoolean("firstRun", true);
         if (firstRun) {
