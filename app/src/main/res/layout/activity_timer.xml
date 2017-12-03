@@ -74,13 +74,13 @@
         android:layout_width="100dp"
         android:layout_height="35dp"
         android:layout_marginTop="238dp"
-        android:layout_toEndOf="@+id/textView_timer_paceLabel"
+        android:layout_toEndOf="@+id/textView_timer_currentTimeLabel"
         android:background="@color/KeepPaceBlue"
         android:enabled="false"
         android:onClick="onClickReset"
         android:text="@string/timer_reset"
         android:textColor="#FFFFFF"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/textView_timer_estimatedTimeLabel"

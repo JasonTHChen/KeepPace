@@ -180,7 +180,6 @@ public class TimerActivity extends AppCompatActivity {
      */
     private void startTimer() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
         if (!isFinished) {
             startTime = SystemClock.uptimeMillis();
             handler.postDelayed(runnable, 0);
@@ -192,10 +191,12 @@ public class TimerActivity extends AppCompatActivity {
                 pauseResumeBtn.setVisibility(GONE);
                 pauseResumeBtn.setEnabled(false);
                 resetBtn.setEnabled(true);
+                resetBtn.setVisibility(View.VISIBLE);
             } else {
                 pauseResumeBtn.setEnabled(true);
                 pauseResumeBtn.setVisibility(View.VISIBLE);
                 resetBtn.setEnabled(true);
+                resetBtn.setVisibility(View.VISIBLE);
             }
         }
     }
