@@ -67,9 +67,6 @@ public class TimerActivity extends AppCompatActivity {
     // button marker size
     private int btn_size;
 
-    // dp scale
-    private final int SCALE = 3;
-
     // Timer thread
     private Runnable runnable = new Runnable() {
         @Override
