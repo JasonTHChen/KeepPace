@@ -41,5 +41,11 @@
         <item name="android:layout_centerHorizontal">true</item>
     </style>
 
+    <!-- TOS popup -->
 
+    <style name="TranslucentPopUp">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">@color/LightGrey</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
 </resources>

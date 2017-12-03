@@ -6,14 +6,14 @@ package ca.sclfitness.keeppace.model;
  */
 
 public class StairCrunch extends Race {
-    private static final double MARKER_1 = 11.66;
-    private static final double MARKER_2 = 22.37;
-    private static final double MARKER_3 = 34.09;
-    private static final double MARKER_4 = 45.45;
-    private static final double MARKER_5 = 56.81;
-    private static final double MARKER_6 = 68.18;
-    private static final double MARKER_7 = 79.54;
-    private static final double MARKER_8 = 90.90;
+    private static final double MARKER_1 = 0.1166;
+    private static final double MARKER_2 = 0.2237;
+    private static final double MARKER_3 = 0.3409;
+    private static final double MARKER_4 = 0.4545;
+    private static final double MARKER_5 = 0.5681;
+    private static final double MARKER_6 = 0.6818;
+    private static final double MARKER_7 = 0.7954;
+    private static final double MARKER_8 = 0.9090;
 
     public static final String STAIR_CRUNCH = "437 Steps";
 

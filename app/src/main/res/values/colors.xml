@@ -6,4 +6,5 @@
     <color name="KeepPaceBlue">#078dbe</color>
     <color name="DarkKeepPaceBlue">#FF1781AB</color>
     <color name="AccentKeepPaceBlue">#FF1781AB</color>
+    <color name="LightGrey">#b3b3b3</color>
 </resources>

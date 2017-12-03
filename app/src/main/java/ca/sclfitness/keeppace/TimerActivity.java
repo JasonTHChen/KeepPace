@@ -68,6 +68,7 @@ public class TimerActivity extends AppCompatActivity {
 
     /**
      * Create timer activity
+     *
      * @param savedInstanceState - save current state
      */
     @Override
@@ -108,7 +109,11 @@ public class TimerActivity extends AppCompatActivity {
         }
 
         // make markers scroll view based on the race
-        this.makeMarkers();
+        if (race.getName().equals(FullCrunch.FULL_CRUNCH)) {
+            this.makeCrunchMarkers();
+        } else {
+            this.makeMarkers();
+        }
 
         if (beatTime) {
             beatTimeLabel.setVisibility(View.VISIBLE);
@@ -327,11 +332,7 @@ public class TimerActivity extends AppCompatActivity {
                 markerBtn.setId(id);
                 markerBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button));
                 markerBtn.setTextColor(Color.WHITE);
-                if (race.getName().equals(FullCrunch.FULL_CRUNCH)) {
-                    markerBtn.setTextSize(15);
-                } else {
-                    markerBtn.setTextSize(30);
-                }
+                markerBtn.setTextSize(30);
             }
 
             markerBtn.setOnClickListener(new View.OnClickListener() {
@@ -342,7 +343,57 @@ public class TimerActivity extends AppCompatActivity {
             });
             markers.addView(markerBtn);
         }
+    }
 
+    /**
+     * Handle special case for crunch buttons.
+     */
+    public void makeCrunchMarkers() {
+        final LinearLayout markers = (LinearLayout) findViewById(R.id.linearLayout_timer_markers);
+        for (int id = 0; id <= race.getMarkers() + 1; id++) {
+            final Button markerBtn = new Button(this);
+            markerBtn.setLayoutParams(new LinearLayout.LayoutParams(200, 200));
+            if (id == 0 || id == (race.getMarkers() + 1)) {
+                markerBtn.setBackground(getResources().getDrawable(R.drawable.bottom_button));
+                markerBtn.setVisibility(View.INVISIBLE);
+                markerBtn.setEnabled(false);
+            } else {
+                markerBtn.setId(id);
+                switch (id) {
+                    case 1:
+                        markerBtn.setBackground(getResources().getDrawable(R.drawable.two));
+                        break;
+                    case 2:
+                        markerBtn.setBackground(getResources().getDrawable(R.drawable.three));
+                        break;
+                    case 3:
+                        markerBtn.setBackground(getResources().getDrawable(R.drawable.four));
+                        break;
+                    case 4:
+                        markerBtn.setBackground(getResources().getDrawable(R.drawable.five));
+                        break;
+                    case 5:
+                        markerBtn.setBackground(getResources().getDrawable(R.drawable.six));
+                        break;
+                    case 6:
+                        markerBtn.setBackground(getResources().getDrawable(R.drawable.seven));
+                        break;
+                    case 7:
+                        markerBtn.setBackground(getResources().getDrawable(R.drawable.eight));
+                        break;
+                    default:
+                        markerBtn.setBackground(getResources().getDrawable(R.drawable.nine));
+                }
+            }
 
+            markerBtn.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    onClickMarker(markerBtn.getId());
+                    scrollView.smoothScrollBy(markerBtn.getWidth(), 0);
+                }
+            });
+
+            markers.addView(markerBtn);
+        }
     }
 }
