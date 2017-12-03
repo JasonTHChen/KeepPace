@@ -1,8 +1,10 @@
 package ca.sclfitness.keeppace;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
@@ -20,12 +22,13 @@ public class RecordsActivity extends AppCompatActivity {
     private ShareActionProvider shareActionProvider;
     private RecordAdapter adapter;
     private List<Record> records;
+    private ListView recordList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
-        ListView recordList = (ListView) findViewById(R.id.listView_records_recordList);
+        recordList = (ListView) findViewById(R.id.listView_records_recordList);
         int raceId = getIntent().getIntExtra("raceId", -1);
         String raceName = getIntent().getStringExtra("raceName");
         if (getSupportActionBar() != null) {
@@ -52,6 +55,41 @@ public class RecordsActivity extends AppCompatActivity {
         shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
         setShareActionProvider(recordFormat());
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete_action:
+                final AlertDialog alertDialog = new AlertDialog.Builder(RecordsActivity.this).create();
+                alertDialog.setTitle("Clear Records");
+                alertDialog.setMessage("Would you like to clear all records?");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        RecordDao recordDao = new RecordDao(RecordsActivity.this);
+                        for (Record r : records) {
+                            recordDao.delete(r.getId());
+                        }
+                        recordDao.close();
+                        adapter.clear();
+                        adapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                    }
+                });
+
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                alertDialog.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void setShareActionProvider(String text) {

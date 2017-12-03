@@ -18,7 +18,13 @@ public class UserLogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_log);
+
+    }
+
+    @Override
+    protected void onResume() {
         setRaceList();
+        super.onResume();
     }
 
     public void setRaceList() {

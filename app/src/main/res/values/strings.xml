@@ -33,6 +33,7 @@
     <string name="records_pace">Avg.Pace</string>
     <string name="records_time">Time</string>
     <string name="upload_title">Upload Records</string>
+    <string name="delete_title">Clear Records</string>
     <string name="records_date">Date</string>
 
     <!-- GetStartedActivity -->
@@ -44,13 +45,14 @@
     <string name="main_grindPace">GRIND PACE</string>
     <string name="main_crunchPace">CRUNCH PACE</string>
     <string name="main_fullCrunch">FULL CRUNCH</string>
-    <string name="main_stairCrunch">STAIR CRUNCH</string>
+    <string name="main_stairCrunch">437 Steps</string>
     <string name="main_racePace">RACE PACE</string>
 
     <!-- PaceActivity -->
     <string name="pace_beatTime">BEAT YOUR BEST</string>
     <string name="pace_grind">JUST GRIND</string>
     <string name="pace_crunch">JUST CRUNCH</string>
+    <string name="pace_steps">JUST STEPS</string>
     <string name="pace_race">JUST RACE</string>
 
     <!-- RaceActivity -->
