@@ -67,27 +67,27 @@
         android:id="@+id/button_timer_pauseResume"
         android:layout_width="100dp"
         android:layout_height="35dp"
-        android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/textView_timer_currentTimeLabel"
         android:background="@color/KeepPaceBlue"
         android:enabled="false"
         android:onClick="onClickPauseResume"
         android:text="@string/timer_pause"
         android:textColor="#FFFFFF"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:layout_below="@+id/textView_timer_beatTime"
+        android:layout_toStartOf="@+id/textView_timer_currentTimeLabel" />
 
     <Button
         android:id="@+id/button_timer_reset"
         android:layout_width="100dp"
         android:layout_height="35dp"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/textView_timer_currentTimeLabel"
         android:background="@color/KeepPaceBlue"
         android:enabled="false"
         android:onClick="onClickReset"
         android:text="@string/timer_reset"
         android:textColor="#FFFFFF"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:layout_below="@+id/textView_timer_beatTime"
+        android:layout_toEndOf="@+id/textView_timer_paceLabel" />
 
     <TextView
         android:id="@+id/textView_timer_estimatedTimeLabel"
