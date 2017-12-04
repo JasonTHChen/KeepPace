@@ -346,6 +346,7 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                TimerActivity.this.finish();
             }
         });
         alertDialog.show();
