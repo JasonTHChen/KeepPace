@@ -6,10 +6,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 /**
  * @author Jason, Tzu Hsiang Chen
@@ -40,10 +37,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         // Load Setting fragment
         getFragmentManager().beginTransaction().replace(android.R.id.content, new MainPreferenceFragment()).commit();
-
-        // ----- Needs fix ------
-        // ((TextView) findViewById(R.id.aboutPage)).setMovementMethod(LinkMovementMethod.getInstance());
-        // ((TextView) findViewById(R.id.aboutPage)).setText(Html.fromHtml(getResources().getString(R.string.About)));
     }
 
     @Override

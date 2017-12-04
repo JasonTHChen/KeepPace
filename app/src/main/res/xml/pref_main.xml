@@ -17,10 +17,16 @@
             android:entryValues="@array/list_value"
             android:key="@string/key_mode"
             android:summary="@string/key_mode"
-            android:title="Mode"/>
+            android:title="Mode" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/setting_about_title"
-        android:layout="@layout/activity_setting">
+    <PreferenceCategory android:title="@string/setting_about_title">
+        <Preference
+            android:key="info"
+            android:title="@string/main_title">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://www.sclfitness.ca/keep-pace" />
+        </Preference>
     </PreferenceCategory>
 </PreferenceScreen>
