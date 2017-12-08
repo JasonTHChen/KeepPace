@@ -249,7 +249,7 @@ public class TimerActivity extends AppCompatActivity {
         double pace = currentPace * 1000.0 * 60.0 * 60.0;
         if (race.getUnit().equals("mile")) {
             currentSpeedView.setText(String.format(Locale.getDefault(), "%.2f " + getString(R.string.pace_mile_per_hr)
-                    , race.convertToMile(pace)));
+                    , pace));
         } else {
             currentSpeedView.setText(String.format(Locale.getDefault(), "%.2f " + getString(R.string.pace_km_per_hr)
                     , pace));
@@ -259,6 +259,13 @@ public class TimerActivity extends AppCompatActivity {
             // finish
             resetBtn.setVisibility(View.GONE);
             resetBtn.setEnabled(false);
+            if (race.getUnit().equalsIgnoreCase("mile") && race.getName().equalsIgnoreCase("Half Marathon")) {
+                pace = pace / Race.MILE_CONVERSION;
+            }
+
+            if (race.getUnit().equalsIgnoreCase("mile") && race.getName().equalsIgnoreCase("Full Marathon")) {
+                pace = pace / Race.MILE_CONVERSION;
+            }
             BigDecimal bd = new BigDecimal(pace);
             bd = bd.setScale(2, RoundingMode.FLOOR);
             pace = bd.doubleValue();

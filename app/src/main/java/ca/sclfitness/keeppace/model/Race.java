@@ -131,6 +131,16 @@ public class Race {
     }
 
     /**
+     * Converts Miles to kilometers
+     *
+     * @param miles distance in miles
+     * @return distance in kilometers
+     */
+    public double convertToKm(double miles) {
+        return miles / MILE_CONVERSION;
+    }
+
+    /**
      * Get current pace
      *
      * @param currentMarker - current marker
@@ -148,6 +158,16 @@ public class Race {
      * @return estimated finish time
      */
     public long getEstimateTime(double pace) {
+        // mile for half marathon
+        if (mUnit.equalsIgnoreCase("mile") && mName.equalsIgnoreCase("Half Marathon")) {
+            return (long) (13.1 / pace);
+        }
+
+        // mile for full marathon
+        if (mUnit.equalsIgnoreCase("mile") && mName.equalsIgnoreCase("Full Marathon")) {
+            return (long) (26.2 / pace);
+        }
+
         return (long) (mDistance / pace);
     }
 
@@ -159,7 +179,7 @@ public class Race {
      */
     public String getMarkerName(int count) {
         if (count == getMarkers()) {
-            return "finish";
+            return "FINISH";
         }
 
         if (count <= 0 || count > getMarkers()) {
@@ -168,7 +188,7 @@ public class Race {
 
         if (mUnit.equals("mile")) {
             if (mName.equals("Half Marathon") || mName.equals("Full Marathon")) {
-                return String.valueOf(count) + "mi";
+                return String.valueOf(count) + "MI";
             }
         }
 
@@ -187,6 +207,7 @@ public class Race {
         int min = sec / 60;
         int hour = min / 60;
         sec = sec % 60;
+        min = min % 60;
         if (hour > 0) {
             return String.format(Locale.getDefault(), "%02d:%02d:%02d", hour, min, sec);
         }
